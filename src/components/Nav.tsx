@@ -11,9 +11,9 @@ const NAV_LINKS: NavItem[] = [
   { href: '/#events', label: 'Events', sectionId: 'events' },
   { href: '/stage', label: 'The Stage' },
   { href: '/bar-food', label: 'Bar & Food' },
-  { href: '/store', label: 'The Store' },
+  { href: '/vendors', label: 'Vendors' },
   { href: '/#visit', label: 'Visit', sectionId: 'visit' },
-  { href: '/#contact', label: 'Contact', sectionId: 'contact' }
+  { href: 'mailto:makersmillsomerset@gmail.com', label: 'Contact' }
 ];
 
 // TODO: replace '#' with the real ticketing URL when available

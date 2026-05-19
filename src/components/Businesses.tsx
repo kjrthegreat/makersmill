@@ -2,7 +2,6 @@ type Business = {
   label: string;
   name: string;
   desc: string;
-  // TODO: replace '#' with each business's real page or external site
   href: string;
 };
 
@@ -11,21 +10,23 @@ const BUSINESSES: Business[] = [
     label: 'Print Studio',
     name: 'Print Ghost',
     desc: "An independent print studio working out of The Makers Mill. Stop in to see what they're making.",
-    href: '#'
+    href: '/businesses/print-ghost'
   },
   {
     label: 'Movement',
     name: 'Pilates',
     desc: 'A pilates studio inside the Mill — classes and sessions in a beautifully restored space.',
-    href: '#'
+    href: '/businesses/pilates'
   },
   {
     label: 'In the Mill',
     name: 'Soul House',
     desc: 'Soul House operates inside the Mill — a distinct space sharing the building with the makers and the music.',
-    href: '#'
+    href: '/businesses/soul-house'
   }
 ];
+
+import Link from 'next/link';
 
 export function Businesses() {
   return (
@@ -51,9 +52,9 @@ export function Businesses() {
               <div className="biz-label">{b.label}</div>
               <h3 className="biz-name">{b.name}</h3>
               <p className="biz-desc">{b.desc}</p>
-              <a href={b.href} className="biz-cta">
+              <Link href={b.href} className="biz-cta">
                 Learn More →
-              </a>
+              </Link>
             </div>
           ))}
         </div>

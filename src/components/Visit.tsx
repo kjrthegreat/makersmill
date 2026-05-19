@@ -25,11 +25,23 @@ export function Visit() {
           </div>
           <div className="hours-title">✦ Hours</div>
           <div className="hours-row">
-            <span className="hours-day">Monday – Wednesday</span>
+            <span className="hours-day">Monday</span>
             <span className="hours-time">Closed</span>
           </div>
           <div className="hours-row">
-            <span className="hours-day">Thursday – Friday</span>
+            <span className="hours-day">Tuesday</span>
+            <span className="hours-time">4:00 PM – 10:00 PM</span>
+          </div>
+          <div className="hours-row">
+            <span className="hours-day">Wednesday</span>
+            <span className="hours-time">12:00 PM – 10:00 PM</span>
+          </div>
+          <div className="hours-row">
+            <span className="hours-day">Thursday</span>
+            <span className="hours-time">12:00 PM – 10:00 PM</span>
+          </div>
+          <div className="hours-row">
+            <span className="hours-day">Friday</span>
             <span className="hours-time">12:00 PM – 10:00 PM</span>
           </div>
           <div className="hours-row">
@@ -38,7 +50,7 @@ export function Visit() {
           </div>
           <div className="hours-row">
             <span className="hours-day">Sunday</span>
-            <span className="hours-time">12:00 PM – 6:00 PM</span>
+            <span className="hours-time">2:00 PM – 9:00 PM</span>
           </div>
           <div className="hours-note">
             ✦ Hours may vary for special events. Always confirm directly with The Makers Mill before
@@ -53,7 +65,7 @@ export function Visit() {
             >
               Get Directions
             </a>
-            <a href="#contact" className="btn btn-outline">
+            <a href="mailto:makersmillsomerset@gmail.com" className="btn btn-outline">
               Contact The Mill
             </a>
           </div>

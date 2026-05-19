@@ -9,17 +9,32 @@ Direction set in the owner meeting (notes: `Untitled document.docx`). Phases are
 - Keep "8 Reasons to Come Back" — expand if it earns the space.
 - Audit mobile event sections; they were specifically called out.
 
-## Phase 2 — Build the three sub-pages
+## Phase 2 — Build the three sub-pages + business pages
 Pages live in the same site, reachable from main nav:
-1. **The Stage** — strong photography of stage/venue/live music; ticketing front-and-center.
-2. **Bar / Food & Drink**
-3. **The Store**
+1. **The Stage** — strong photography of stage/venue/live music; ticketing front-and-center. ✅ Done.
+2. **Bar / Food & Drink** ✅ Done.
+3. **Vendors** (formerly The Store) ✅ Done.
+
+Individual pages for each business inside the Mill — routes under `/businesses/`:
+- `/businesses/print-ghost` — Print Ghost print studio
+- `/businesses/pilates` — Pilates studio
+- `/businesses/soul-house` — Soul House
+
+Each business page follows the same sub-page template (hero, overview, features, CTA, "Also at the Mill"). Copy is placeholder until the business owners provide real info — use general but evocative brand-consistent language for now.
 
 Arcade and Pool get buttons (possibly linking to schedule/calendar) but stay on the homepage. Trivia does not need its own button.
 
-## Phase 3 — Applications & inquiry flows
-- Add buttons that open external forms for rental space, business space, and vendor inquiries.
-- Surface "businesses within Makers Mill" (Print Ghost, Pilates, Soul House) as their own brands with links.
+## Phase 3 — Applications & inquiry flows + button functionality
+- Add buttons that open external forms for rental space, business space, and vendor inquiries. ✅ Modal system built (ApplyButton, PerformerInquiryButton).
+- Surface "businesses within Makers Mill" (Print Ghost, Pilates, Soul House) as their own brands with links — individual pages scaffolded (see Phase 2).
+- **Make all placeholder buttons functional** — currently `href="#"` throughout:
+  - Ticket buttons in Hero, Stage page, Events cards → real ticketing URL (pending Phase 5 decision)
+  - "Get Event Tickets" CTA in Hero → same ticketing URL
+  - Green River Valley Farm "Order Produce" button → GRVF ordering URL
+  - Individual event CTAs (Tickets, Event Details) → per-show URLs
+  - Business card "Learn More" links on homepage → each business's subpage (Phase 2 pages)
+- **Expand Businesses section on homepage** — Businesses.tsx cards should have richer descriptions, a visual identity mark (like a logo initial or color), and link to each business's own page once those are live.
+- Each business page should eventually be owner-managed: they supply real photos, hours, and contact info to replace the placeholder copy.
 
 ## Phase 4 — Search & online presence
 - Clean up / take down outdated pages across the web.
@@ -34,6 +49,17 @@ Arcade and Pool get buttons (possibly linking to schedule/calendar) but stay on 
 ## Phase 6 — Partner site work
 - **Green River Valley Farm** — feature on the Makers Mill site, link out to their order/pickup flow.
 - **I Love You a Brunch** — scope a separate build with menu display + online ordering.
+
+## Phase 7 — Vendor platform
+The `/vendors` page needs to grow from copy + apply form into a real directory — and eventually a storefront — for the makers inside the Mill.
+- Build a vendor directory page: every enrolled vendor listed on `/vendors` with a thumbnail and name. Placeholder names / blank entries are fine until real vendors are wired up.
+- Each vendor gets their own profile page that they can customize themselves (name, photos, story, contact, hours, etc.).
+- Auth: vendor login + signup, plus an admin page for Makers Mill staff to approve, manage, and remove vendor accounts.
+- Reserve a per-vendor mini-store slot in the profile layout from the start, even though the storefront ships later — placeholder for now.
+
+### Later
+- Enable product upload + sales for select vendors (gated by admin approval — not open to all).
+- Per-vendor storefronts / checkout, once payment infrastructure from Phase 5 is settled.
 
 ## Advertising model (parallel track)
 Pitch participating vendors/businesses on 10% of sales generated through placements on the Makers Mill site. Needs a tracking mechanism before it can be sold.

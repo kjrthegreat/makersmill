@@ -56,8 +56,8 @@ export default function BarFoodPage() {
         </div>
         <div className="page-hero-glow"></div>
         <div className="page-hero-inner">
-          <Link href="/" className="back-home rev">
-            ← The Makers Mill
+          <Link href="/" className="back-home rev" aria-label="Back to Makers Mill home">
+            Back to Makers Mill
           </Link>
           <div className="page-hero-stamp rev">✦ Bar &amp; Food · Downtown Somerset ✦</div>
           <h1 className="page-hero-h rev" style={{ transitionDelay: '.1s' }}>
@@ -161,7 +161,7 @@ export default function BarFoodPage() {
       </section>
 
       {/* ── ATMOSPHERE ── */}
-      <section id="atmosphere" style={{ position: 'relative', padding: '88px clamp(20px,3.5%,72px)', background: 'var(--deep)', overflow: 'hidden', textAlign: 'center' }}>
+      <section id="atmosphere" style={{ position: 'relative', padding: '88px clamp(20px,3.5%,72px)', background: 'var(--ink)', overflow: 'hidden', textAlign: 'center', isolation: 'isolate' }}>
         <div className="comm-inner">
           <div className="label rev" style={{ justifyContent: 'center' }}>
             The Atmosphere
@@ -231,15 +231,18 @@ export default function BarFoodPage() {
               </p>
               <span className="also-arrow">Explore The Stage →</span>
             </Link>
-            <Link href="/store" className="also-card rev" style={{ transitionDelay: '.28s' }}>
+            <Link href="/vendors" className="also-card rev" style={{ transitionDelay: '.28s' }}>
               <div className="also-label">Shop Local</div>
-              <div className="also-name">The Store</div>
+              <div className="also-name">Vendors</div>
               <p className="also-desc">
                 Local makers, artisan goods, and one-of-a-kind vintage finds.
               </p>
-              <span className="also-arrow">Visit The Store →</span>
+              <span className="also-arrow">View Vendors →</span>
             </Link>
           </div>
+          <Link href="/" className="also-home rev" style={{ transitionDelay: '.36s' }}>
+            Back to Makers Mill Home
+          </Link>
         </div>
       </section>
 

@@ -8,9 +8,9 @@ const LINKS = [
   { href: '/#events', label: 'Events' },
   { href: '/stage', label: 'The Stage' },
   { href: '/bar-food', label: 'Bar & Food' },
-  { href: '/store', label: 'The Store' },
+  { href: '/vendors', label: 'Vendors' },
   { href: '/#visit', label: 'Visit' },
-  { href: '/#contact', label: 'Contact' }
+  { href: 'mailto:makersmillsomerset@gmail.com', label: 'Contact' }
 ];
 
 export function Footer() {

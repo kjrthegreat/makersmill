@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { ApplyButton } from './ApplyButton';
 
 // TODO: replace '#' with the real ticketing URL when available
 const TICKETS_HREF = '#';
@@ -49,18 +49,14 @@ export function Hero() {
           </a>
         </div>
         <div className="hero-apply rev" style={{ transitionDelay: '.48s' }}>
-          <Link href="/store#apply-form" className="hero-apply-link">
+          <ApplyButton className="hero-apply-link">
             <span className="hero-apply-stamp">✦ Now Accepting Applications</span>
             <span className="hero-apply-body">
               Interested in a retail space, studio, or stage spot at the Mill?
             </span>
             <span className="hero-apply-cta">Apply for a Space →</span>
-          </Link>
+          </ApplyButton>
         </div>
-      </div>
-      <div className="hero-scroll">
-        <div className="hero-scroll-line"></div>
-        Scroll
       </div>
     </section>
   );

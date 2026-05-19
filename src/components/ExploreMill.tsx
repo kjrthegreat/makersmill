@@ -42,14 +42,14 @@ const CARDS: ExploreCard[] = [
   {
     n: '03',
     label: 'Shop Local',
-    title: 'The',
-    titleEm: 'Store',
+    title: '',
+    titleEm: 'Vendors',
     desc: "Local makers, artisan goods, and one-of-a-kind vintage finds. New stuff every visit from Somerset's creative community.",
-    ctaLabel: 'Visit The Store',
-    href: '/store',
+    ctaLabel: 'View Vendors',
+    href: '/vendors',
     image:
       'https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_004-1024x682.jpg',
-    alt: 'The Store at The Makers Mill — artisan goods and vintage finds in Somerset, KY'
+    alt: 'Vendors at The Makers Mill — artisan goods and vintage finds in Somerset, KY'
   }
 ];
 

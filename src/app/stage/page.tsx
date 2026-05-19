@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
-import { PerformerForm } from '@/components/PerformerForm';
+import { PerformerInquiryButton } from '@/components/PerformerInquiryButton';
 
 export const metadata: Metadata = {
   title: 'The Stage — Live Music in Somerset, KY | The Makers Mill',
@@ -12,8 +12,6 @@ export const metadata: Metadata = {
 
 // TODO: replace '#' with the real ticketing URL when available
 const TICKETS_HREF = '#';
-// Performer inquiry routes to the form section on this page
-const PERFORMER_INQUIRY_HREF = '#performer-form';
 const ALL_SHOWS_HREF = '#';
 
 type Show = {
@@ -112,8 +110,8 @@ export default function StagePage() {
         </div>
         <div className="page-hero-glow"></div>
         <div className="page-hero-inner">
-          <Link href="/" className="back-home rev">
-            ← The Makers Mill
+          <Link href="/" className="back-home rev" aria-label="Back to Makers Mill home">
+            Back to Makers Mill
           </Link>
           <div className="page-hero-stamp rev">✦ The Stage · Live Music ✦</div>
           <h1 className="page-hero-h rev" style={{ transitionDelay: '.1s' }}>
@@ -132,9 +130,9 @@ export default function StagePage() {
             <a href={TICKETS_HREF} className="btn btn-fill">
               Get Show Tickets
             </a>
-            <a href={PERFORMER_INQUIRY_HREF} className="btn btn-outline">
+            <PerformerInquiryButton className="btn btn-outline">
               Book or Inquire About the Stage
-            </a>
+            </PerformerInquiryButton>
           </div>
         </div>
       </section>
@@ -237,8 +235,8 @@ export default function StagePage() {
         </div>
       </section>
 
-      {/* ── PERFORMER INQUIRY (form) ── */}
-      <section id="performer-form" className="inquiry">
+      {/* ── PERFORMER INQUIRY (modal trigger) ── */}
+      <section id="performer-inquiry" className="inquiry">
         <div className="inquiry-inner">
           <div className="label rev" style={{ justifyContent: 'center' }}>
             For Performers
@@ -250,15 +248,17 @@ export default function StagePage() {
           </h2>
           <p className="inquiry-p rev" style={{ transitionDelay: '.16s' }}>
             Bands, songwriters, comedians, organizers — if you&apos;ve got a set in you or an
-            event in mind, we want to hear from you. Fill this out and we&apos;ll be in touch.
+            event in mind, we want to hear from you. Hit the button and we&apos;ll be in touch.
           </p>
           <div className="inquiry-tags rev" style={{ transitionDelay: '.24s', marginBottom: 28 }}>
             <span>Bands &amp; Songwriters</span>
             <span>Touring Acts</span>
             <span>Event Organizers</span>
           </div>
-          <div className="rev" style={{ transitionDelay: '.32s' }}>
-            <PerformerForm />
+          <div className="inquiry-ctas rev" style={{ transitionDelay: '.32s' }}>
+            <PerformerInquiryButton className="btn btn-fill">
+              Submit Performer Inquiry
+            </PerformerInquiryButton>
           </div>
           <p className="inquiry-p rev" style={{ transitionDelay: '.4s', marginTop: 28, fontSize: 13 }}>
             Prefer email? Reach out at{' '}
@@ -318,15 +318,18 @@ export default function StagePage() {
               </p>
               <span className="also-arrow">View Bar &amp; Food →</span>
             </Link>
-            <Link href="/store" className="also-card rev" style={{ transitionDelay: '.28s' }}>
+            <Link href="/vendors" className="also-card rev" style={{ transitionDelay: '.28s' }}>
               <div className="also-label">Shop Local</div>
-              <div className="also-name">The Store</div>
+              <div className="also-name">Vendors</div>
               <p className="also-desc">
                 Local makers, artisan goods, and one-of-a-kind vintage finds.
               </p>
-              <span className="also-arrow">Visit The Store →</span>
+              <span className="also-arrow">View Vendors →</span>
             </Link>
           </div>
+          <Link href="/" className="also-home rev" style={{ transitionDelay: '.36s' }}>
+            Back to Makers Mill Home
+          </Link>
         </div>
       </section>
 

@@ -2,15 +2,14 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
-import { ApplyForm } from '@/components/ApplyForm';
+import { ApplyButton } from '@/components/ApplyButton';
 
 export const metadata: Metadata = {
-  title: 'The Store — Local Makers & Vintage Finds in Somerset, KY | The Makers Mill',
+  title: 'Vendors — Local Makers & Vintage Finds in Somerset, KY | The Makers Mill',
   description:
-    "The Store at The Makers Mill — handmade goods from Somerset's local makers, curated vintage finds, and one-of-a-kind pieces. New stuff every visit at 402 E. Mt. Vernon St."
+    "Vendors at The Makers Mill — handmade goods from Somerset's local makers, curated vintage finds, and one-of-a-kind pieces. New stuff every visit at 402 E. Mt. Vernon St."
 };
 
-const APPLY_FORM_ANCHOR = '#apply-form';
 const CONTACT_HREF = 'mailto:makersmillsomerset@gmail.com';
 
 type Feature = {
@@ -41,7 +40,7 @@ const FEATURES: Feature[] = [
   }
 ];
 
-export default function StorePage() {
+export default function VendorsPage() {
   return (
     <>
       <Nav />
@@ -53,15 +52,15 @@ export default function StorePage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_004-1024x682.jpg"
-            alt="The Store at The Makers Mill — local makers and vintage finds in Somerset, Kentucky"
+            alt="Vendors at The Makers Mill — local makers and vintage finds in Somerset, Kentucky"
           />
         </div>
         <div className="page-hero-glow"></div>
         <div className="page-hero-inner">
-          <Link href="/" className="back-home rev">
-            ← The Makers Mill
+          <Link href="/" className="back-home rev" aria-label="Back to Makers Mill home">
+            Back to Makers Mill
           </Link>
-          <div className="page-hero-stamp rev">✦ The Store · Local Makers ✦</div>
+          <div className="page-hero-stamp rev">✦ Vendors · Local Makers ✦</div>
           <h1 className="page-hero-h rev" style={{ transitionDelay: '.1s' }}>
             FROM LOCAL
             <br />
@@ -73,15 +72,15 @@ export default function StorePage() {
           </div>
           <p className="page-hero-sub rev" style={{ transitionDelay: '.28s' }}>
             Handmade goods, art, and curated vintage from Somerset&apos;s makers — new stuff every
-            visit at The Store inside Makers Mill.
+            visit from the Vendors inside Makers Mill.
           </p>
           <div className="page-hero-ctas rev" style={{ transitionDelay: '.36s' }}>
             <Link href="/#visit" className="btn btn-fill">
-              Visit The Store
+              Plan Your Visit
             </Link>
-            <a href={APPLY_FORM_ANCHOR} className="btn btn-outline">
+            <ApplyButton className="btn btn-outline">
               Interested in Selling Here?
-            </a>
+            </ApplyButton>
           </div>
         </div>
       </section>
@@ -90,14 +89,14 @@ export default function StorePage() {
       <section className="pintro">
         <div className="pintro-inner">
           <div className="rev-l">
-            <div className="label">About The Store</div>
+            <div className="label">About the Vendors</div>
             <h2 className="pintro-h">
               Browse Unique.
               <br />
               <em>Support Local.</em>
             </h2>
             <p className="pintro-p">
-              The Store is the artisan side of Makers Mill — a curated retail floor of work by
+              Our vendors are the artisan side of Makers Mill — a curated retail floor of work by
               Somerset&apos;s creative community, alongside hand-picked vintage. Pieces rotate
               regularly, so the shop you walk through this weekend won&apos;t be the same one as
               last month.
@@ -112,7 +111,7 @@ export default function StorePage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_005-1024x682.jpg"
-                alt="Handmade goods at The Store, The Makers Mill"
+                alt="Handmade goods from the Vendors at The Makers Mill"
               />
             </div>
             <div className="pintro-photo-sm">
@@ -126,7 +125,7 @@ export default function StorePage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_010-1024x682.jpg"
-                alt="Local maker display at The Store"
+                alt="Local maker display from a Vendor at The Makers Mill"
               />
             </div>
           </div>
@@ -134,7 +133,7 @@ export default function StorePage() {
       </section>
 
       {/* ── FEATURES ── */}
-      <section id="store-features" className="feat">
+      <section id="vendors-features" className="feat">
         <div className="feat-inner">
           <div className="feat-head rev">
             <div className="label" style={{ justifyContent: 'center' }}>
@@ -146,7 +145,7 @@ export default function StorePage() {
               <em>Found Here.</em>
             </h2>
             <p className="feat-sub">
-              The Store rotates regularly. These are the three things you can count on every
+              The Vendors rotate regularly. These are the three things you can count on every
               visit.
             </p>
           </div>
@@ -163,8 +162,8 @@ export default function StorePage() {
         </div>
       </section>
 
-      {/* ── APPLY FOR SPACE (form) ── */}
-      <section id="apply-form" className="inquiry">
+      {/* ── APPLY FOR SPACE (modal trigger) ── */}
+      <section id="apply" className="inquiry">
         <div className="inquiry-inner">
           <div className="label rev" style={{ justifyContent: 'center' }}>
             For Makers &amp; Sellers
@@ -175,16 +174,16 @@ export default function StorePage() {
             <em>to Sell?</em>
           </h2>
           <p className="inquiry-p rev" style={{ transitionDelay: '.16s' }}>
-            Makers, vintage curators, small businesses — if your work would feel at home on The
-            Store floor, we want to hear from you. Fill this out and we&apos;ll be in touch.
+            Makers, vintage curators, small businesses — if your work would feel at home on the
+            Vendor floor, we want to hear from you. Hit the button and we&apos;ll be in touch.
           </p>
           <div className="inquiry-tags rev" style={{ transitionDelay: '.24s', marginBottom: 28 }}>
             <span>Local Makers</span>
             <span>Vintage Curators</span>
             <span>Small Businesses</span>
           </div>
-          <div className="rev" style={{ transitionDelay: '.32s' }}>
-            <ApplyForm />
+          <div className="inquiry-ctas rev" style={{ transitionDelay: '.32s' }}>
+            <ApplyButton className="btn btn-fill">Apply for a Space</ApplyButton>
           </div>
           <p className="inquiry-p rev" style={{ transitionDelay: '.4s', marginTop: 28, fontSize: 13 }}>
             Prefer email? Reach out at{' '}
@@ -208,7 +207,7 @@ export default function StorePage() {
             <em>One Roof.</em>
           </h2>
           <p className="also-sub rev" style={{ transitionDelay: '.16s' }}>
-            The Store is one of three. Take a look at the rest of Makers Mill.
+            The Vendors are one of three. Take a look at the rest of Makers Mill.
           </p>
           <div className="also-grid">
             <Link href="/stage" className="also-card rev" style={{ transitionDelay: '.2s' }}>
@@ -228,6 +227,9 @@ export default function StorePage() {
               <span className="also-arrow">View Bar &amp; Food →</span>
             </Link>
           </div>
+          <Link href="/" className="also-home rev" style={{ transitionDelay: '.36s' }}>
+            Back to Makers Mill Home
+          </Link>
         </div>
       </section>
 

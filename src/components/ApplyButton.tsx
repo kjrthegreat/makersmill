@@ -34,8 +34,8 @@ export function ApplyButton({ className, children }: Props) {
             Apply for <em>a Space.</em>
           </h2>
           <p className="modal-p">
-            Retail space, a studio spot, or a corner of The Store — fill this out and we&apos;ll
-            be in touch.
+            Retail space, a studio spot, or a Vendor booth — fill this out and we&apos;ll be in
+            touch.
           </p>
         </div>
         <ApplyForm />
