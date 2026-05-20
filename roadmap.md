@@ -6,7 +6,7 @@ Direction set in the owner meeting (notes: `Untitled document.docx`). Phases are
 - Open up the layout so it's obvious more pages exist.
 - Promote the ticket CTA to the most visible element on the page.
 - Communicate the multi-experience nature of Makers Mill above the fold.
-- Keep "8 Reasons to Come Back" — expand if it earns the space.
+- Keep "8 Reasons to Come Back" — expand if it earns the space. ✅ Converted to interactive accordion with expanded copy.
 - Audit mobile event sections; they were specifically called out.
 
 ## Phase 2 — Build the three sub-pages + business pages
@@ -16,9 +16,9 @@ Pages live in the same site, reachable from main nav:
 3. **Vendors** (formerly The Store) ✅ Done.
 
 Individual pages for each business inside the Mill — routes under `/businesses/`:
-- `/businesses/print-ghost` — Print Ghost print studio
-- `/businesses/pilates` — Pilates studio
-- `/businesses/soul-house` — Soul House
+- `/businesses/print-ghost` — Print Ghost print studio ✅ Done.
+- `/businesses/pilates` — Pilates studio ✅ Done.
+- `/businesses/soul-house` — Soul House ✅ Done.
 
 Each business page follows the same sub-page template (hero, overview, features, CTA, "Also at the Mill"). Copy is placeholder until the business owners provide real info — use general but evocative brand-consistent language for now.
 
@@ -26,7 +26,7 @@ Arcade and Pool get buttons (possibly linking to schedule/calendar) but stay on 
 
 ## Phase 3 — Applications & inquiry flows + button functionality
 - Add buttons that open external forms for rental space, business space, and vendor inquiries. ✅ Modal system built (ApplyButton, PerformerInquiryButton).
-- Surface "businesses within Makers Mill" (Print Ghost, Pilates, Soul House) as their own brands with links — individual pages scaffolded (see Phase 2).
+- Surface "businesses within Makers Mill" (Print Ghost, Pilates, Soul House) as their own brands with links — individual pages scaffolded (see Phase 2). ✅ Done.
 - **Make all placeholder buttons functional** — currently `href="#"` throughout:
   - Ticket buttons in Hero, Stage page, Events cards → real ticketing URL (pending Phase 5 decision)
   - "Get Event Tickets" CTA in Hero → same ticketing URL
@@ -63,3 +63,11 @@ The `/vendors` page needs to grow from copy + apply form into a real directory �
 
 ## Advertising model (parallel track)
 Pitch participating vendors/businesses on 10% of sales generated through placements on the Makers Mill site. Needs a tracking mechanism before it can be sold.
+
+---
+
+## Done (this session)
+- Section divider bars: symmetric orange glow on both sides of every section break.
+- "Eight Reasons to Come Back" converted from card grid to interactive accordion — multiple items can be open simultaneously, copy expanded with made-up detail for all 8 entries.
+- Back to Makers Mill button: redesigned as a solid orange button, repositioned to top-left of each sub-page hero (out of the centered hero content). Applied consistently across Stage, Bar & Food, Vendors, Print Ghost, Pilates, and Soul House pages.
+- Fixed reveal animation bug on accordion — React re-renders were wiping the IntersectionObserver's `on` class, causing rows to go invisible on click.

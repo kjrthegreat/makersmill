@@ -22,8 +22,6 @@ export function Modal({ open, onClose, ariaTitle, children }: Props) {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', onKey);
-
-    // Focus the content for keyboard users
     contentRef.current?.focus();
 
     return () => {
@@ -45,15 +43,20 @@ export function Modal({ open, onClose, ariaTitle, children }: Props) {
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          type="button"
-          className="modal-close"
-          onClick={onClose}
-          aria-label="Close"
-        >
-          ×
-        </button>
-        {children}
+        {/* Close bar is outside the scrolling body so it's always visible */}
+        <div className="modal-close-bar">
+          <button
+            type="button"
+            className="modal-close"
+            onClick={onClose}
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+        <div className="modal-body">
+          {children}
+        </div>
       </div>
     </div>
   );

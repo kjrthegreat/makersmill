@@ -109,10 +109,8 @@ export default function StagePage() {
           />
         </div>
         <div className="page-hero-glow"></div>
+        <Link href="/" className="back-home" aria-label="Back to Makers Mill home">Back to Makers Mill</Link>
         <div className="page-hero-inner">
-          <Link href="/" className="back-home rev" aria-label="Back to Makers Mill home">
-            Back to Makers Mill
-          </Link>
           <div className="page-hero-stamp rev">✦ The Stage · Live Music ✦</div>
           <h1 className="page-hero-h rev" style={{ transitionDelay: '.1s' }}>
             WHERE THE
@@ -185,7 +183,7 @@ export default function StagePage() {
       </section>
 
       {/* ── UPCOMING SHOWS ── */}
-      <section id="upcoming" style={{ position: 'relative', padding: '88px clamp(20px,3.5%,72px)', background: 'var(--ink)', overflow: 'hidden' }}>
+      <section id="upcoming" className="upcoming-shows">
         <div className="events-inner">
           <div className="events-top">
             <div className="rev">

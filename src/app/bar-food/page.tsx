@@ -55,10 +55,8 @@ export default function BarFoodPage() {
           />
         </div>
         <div className="page-hero-glow"></div>
+        <Link href="/" className="back-home" aria-label="Back to Makers Mill home">Back to Makers Mill</Link>
         <div className="page-hero-inner">
-          <Link href="/" className="back-home rev" aria-label="Back to Makers Mill home">
-            Back to Makers Mill
-          </Link>
           <div className="page-hero-stamp rev">✦ Bar &amp; Food · Downtown Somerset ✦</div>
           <h1 className="page-hero-h rev" style={{ transitionDelay: '.1s' }}>
             GOOD

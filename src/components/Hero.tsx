@@ -44,9 +44,6 @@ export function Hero() {
           <a href={TICKETS_HREF} className="btn btn-fill">
             Get Event Tickets
           </a>
-          <a href="#explore-mill" className="btn btn-outline">
-            Explore Makers Mill
-          </a>
         </div>
         <div className="hero-apply rev" style={{ transitionDelay: '.48s' }}>
           <ApplyButton className="hero-apply-link">

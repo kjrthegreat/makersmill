@@ -26,7 +26,7 @@ body{background:var(--ink);color:var(--cream);font-family:var(--body);overflow-x
 section[id]{scroll-margin-top:84px}
 /* Full-width glowing dividers between consecutive sections */
 section + section,
-section + footer{border-top:2px solid var(--orange);box-shadow:0 -14px 32px -2px rgba(196,87,26,.45)}
+section + footer{border-top:2px solid var(--orange);box-shadow:0 -14px 32px -2px rgba(196,87,26,.45),inset 0 6px 28px -6px rgba(196,87,26,.45)}
 /* Skip the divider directly after the hero — the hero's gradient handles that transition */
 section:first-of-type + section{border-top:none;box-shadow:none}
 a{text-decoration:none;color:inherit}
@@ -119,20 +119,27 @@ nav.scrolled{background:rgba(25,21,16,.95);border-color:var(--border);backdrop-f
 /* Modal (Apply / Performer inquiry popups) */
 @keyframes modal-fade{from{opacity:0}to{opacity:1}}
 @keyframes modal-rise{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
-.modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(10,8,5,.94);backdrop-filter:blur(14px) saturate(120%);-webkit-backdrop-filter:blur(14px) saturate(120%);display:flex;align-items:flex-start;justify-content:center;padding:max(40px,6vh) 20px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;animation:modal-fade .2s ease-out}
-.modal-content{position:relative;width:100%;max-width:640px;background:var(--deep);border:1px solid var(--border);border-top:2px solid var(--orange);border-radius:3px;padding:44px clamp(24px,5%,52px) 40px;box-shadow:0 24px 64px rgba(0,0,0,.55),0 0 0 1px rgba(196,87,26,.08);animation:modal-rise .28s cubic-bezier(.16,.84,.44,1);outline:none}
-.modal-close{position:absolute;top:12px;right:14px;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:2px;color:var(--cream-dk);font-size:22px;line-height:1;cursor:pointer;transition:background .2s,border-color .2s,color .2s;z-index:3;font-family:var(--body)}
+/* Overlay never scrolls — only .modal-body scrolls internally */
+.modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(68,68,68,1);backdrop-filter:blur(14px) saturate(120%);-webkit-backdrop-filter:blur(14px) saturate(120%);display:flex;align-items:center;justify-content:center;padding:max(24px,4vh) 20px;animation:modal-fade .2s ease-out}
+.modal-content{width:100%;max-width:640px;background:var(--deep);border:1px solid var(--border);border-top:2px solid var(--orange);border-radius:3px;display:flex;flex-direction:column;max-height:calc(100dvh - max(48px,8vh));box-shadow:0 24px 64px rgba(0,0,0,.55),0 0 0 1px rgba(196,87,26,.08);animation:modal-rise .28s cubic-bezier(.16,.84,.44,1);outline:none}
+.modal-close-bar{display:flex;justify-content:flex-end;padding:10px 14px 4px;flex-shrink:0}
+.modal-close{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:2px;color:var(--cream-dk);font-size:22px;line-height:1;cursor:pointer;transition:background .2s,border-color .2s,color .2s;font-family:var(--body)}
 .modal-close:hover{background:rgba(196,87,26,.12);border-color:var(--ob);color:var(--orange)}
+.modal-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:0 clamp(24px,5%,52px) 40px}
 .modal-head{text-align:center;margin-bottom:26px}
 .modal-h{font-family:var(--display);font-size:clamp(28px,4.4vw,42px);font-weight:900;line-height:1;margin:8px 0 12px;color:var(--cream)}
 .modal-h em{color:var(--orange);font-style:italic}
 .modal-p{font-size:14px;color:var(--cream-dk);line-height:1.65;font-weight:300;max-width:480px;margin:0 auto}
 @media (max-width:600px){
-  .modal-overlay{padding:16px 10px}
-  .modal-content{padding:48px 18px 26px;border-top-width:2px}
-  .modal-close{position:fixed;top:14px;right:14px;width:44px;height:44px;font-size:24px;background:var(--deep);border-color:var(--ob);box-shadow:0 4px 12px rgba(0,0,0,.4)}
-  .modal-h{font-size:26px}
-  .modal-p{font-size:13.5px}
+  /* Centered card on mobile (not full-screen) — sizes to the form, close button always reachable */
+  .modal-overlay{padding:max(env(safe-area-inset-top),16px) 12px max(env(safe-area-inset-bottom),16px) 12px;align-items:center;justify-content:center}
+  .modal-content{max-width:100%;max-height:calc(100dvh - max(env(safe-area-inset-top),16px) - max(env(safe-area-inset-bottom),16px));border-radius:3px}
+  .modal-close-bar{padding:10px 12px 4px;flex-shrink:0}
+  .modal-close{width:44px;height:44px;font-size:24px;background:var(--deep);border-color:var(--ob)}
+  .modal-body{padding:0 18px 24px}
+  .modal-h{font-size:24px;margin:6px 0 8px}
+  .modal-p{font-size:13px}
+  .modal-head{margin-bottom:18px}
   /* Prevent iOS Safari from zooming when focusing a form field */
   .apply-form input,
   .apply-form textarea,
@@ -163,6 +170,23 @@ nav.scrolled{background:rgba(25,21,16,.95);border-color:var(--border);backdrop-f
 @media(max-width:600px){
   .form-row{grid-template-columns:1fr}
   .apply-form button[type=submit]{align-self:stretch;text-align:center;justify-content:center}
+}
+
+/* Multistep wizard — each step fits in the popup, no scrolling */
+.multistep{gap:14px}
+.multistep-progress{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+.multistep-step-label{font-family:var(--stamp);font-size:9px;color:var(--orange);letter-spacing:.2em;text-transform:uppercase}
+.multistep-bar{height:2px;background:var(--border);overflow:hidden;border-radius:1px}
+.multistep-bar-fill{height:100%;background:var(--orange);transition:width .35s cubic-bezier(.16,.84,.44,1)}
+.multistep-pane{display:none;flex-direction:column;gap:14px}
+.multistep-pane.active{display:flex;animation:multistep-pane-in .25s ease-out}
+@keyframes multistep-pane-in{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
+.multistep-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.multistep-nav .btn{padding:13px 24px;justify-content:center}
+.multistep-nav > span{flex:0 0 auto}
+@media(max-width:600px){
+  .multistep-nav{flex-direction:row}
+  .multistep-nav .btn{flex:1;min-height:48px}
 }
 @keyframes acornFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
@@ -214,15 +238,20 @@ nav.scrolled{background:rgba(25,21,16,.95);border-color:var(--border);backdrop-f
 .exp-head{text-align:center;margin-bottom:50px}
 .exp-h{font-family:var(--display);font-size:clamp(36px,6vw,76px);font-weight:900;line-height:.93;margin-bottom:10px}
 .exp-sub{font-size:14px;color:var(--tan);font-weight:300}
-.exp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.exp-card{background:var(--deep);border:1px solid var(--border);border-radius:3px;padding:26px 20px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;cursor:default}
-.exp-card:hover{transform:translateY(-4px);border-color:var(--ob);box-shadow:0 10px 28px rgba(0,0,0,.42)}
-.exp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--orange),transparent);opacity:0;transition:opacity .3s}
-.exp-card:hover::before{opacity:1}
-.exp-icon{font-size:26px;margin-bottom:12px}
-.exp-title{font-family:var(--cond);font-size:17px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--cream);margin-bottom:6px}
-.exp-desc{font-size:12px;color:var(--gray);line-height:1.6}
-.exp-n{position:absolute;top:11px;right:12px;font-family:var(--stamp);font-size:9px;color:rgba(255,255,255,.08);letter-spacing:.08em}
+.exp-accordion{max-width:820px;margin:0 auto}
+.exp-acc-item{border-bottom:1px solid var(--border)}
+.exp-acc-item:first-child{border-top:1px solid var(--border)}
+.exp-acc-head{display:flex;align-items:center;gap:16px;width:100%;padding:18px 6px;background:none;border:none;cursor:pointer;color:var(--cream);text-align:left;transition:background .2s}
+.exp-acc-head:hover{background:rgba(240,232,214,.03)}
+.exp-acc-n{font-family:var(--stamp);font-size:9px;letter-spacing:.15em;color:var(--orange);min-width:24px}
+.exp-acc-icon{font-size:22px;min-width:30px;text-align:center}
+.exp-acc-title{font-family:var(--cond);font-size:17px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;flex:1;transition:color .2s}
+.exp-acc-item.open .exp-acc-title,.exp-acc-head:hover .exp-acc-title{color:var(--orange)}
+.exp-acc-chevron{font-size:20px;color:var(--orange);line-height:1;min-width:20px;text-align:center}
+.exp-acc-body{overflow:hidden;max-height:0;transition:max-height .4s ease}
+.exp-acc-item.open .exp-acc-body{max-height:400px}
+.exp-acc-desc{padding:2px 6px 18px 92px;font-size:14px;color:var(--cream-dk);line-height:1.7;font-weight:300}
+@media(max-width:480px){.exp-acc-desc{padding-left:40px}}
 
 /* ══ GALLERY ══ */
 #gallery{position:relative;padding:88px clamp(20px,3.5%,72px);background:var(--ink);overflow:hidden}
@@ -397,9 +426,9 @@ footer{position:relative;background:var(--ink);border-top:1px solid var(--border
 .page-hero-ctas{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
 
 /* Back-to-home breadcrumb (top of every sub-page hero) */
-.back-home{display:inline-flex;align-items:center;gap:10px;font-family:var(--cond);font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);margin-bottom:22px;padding:12px 22px;background:var(--orange);border:1px solid var(--orange);border-radius:2px;box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 0 1px rgba(240,232,214,.08) inset;transition:background .2s,box-shadow .2s,transform .2s}
-.back-home::before{content:'←';font-size:16px;color:var(--cream);transition:transform .25s}
-.back-home:hover{background:var(--orange-lt);box-shadow:0 10px 26px rgba(196,87,26,.5);transform:translateY(-1px)}
+.back-home{position:absolute;top:84px;left:clamp(20px,3.5%,72px);z-index:3;display:inline-flex;align-items:center;gap:9px;font-family:var(--cond);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);background:var(--orange);border:1px solid var(--orange);padding:10px 18px;border-radius:2px;transition:background .2s,box-shadow .2s}
+.back-home::before{content:'←';font-size:15px;transition:transform .22s}
+.back-home:hover{background:var(--orange-lt);box-shadow:0 0 18px rgba(196,87,26,.45)}
 .back-home:hover::before{transform:translateX(-4px)}
 
 /* "Back to Makers Mill home" CTA below the sibling grid */
@@ -495,7 +524,6 @@ footer{position:relative;background:var(--ink);border-top:1px solid var(--border
   .visit-photos{grid-template-rows:240px 160px}
   .explore-grid{grid-template-columns:repeat(2,1fr)}
   .explore-card:last-child{grid-column:1/3}
-  .exp-grid{grid-template-columns:repeat(2,1fr)}
   .biz-grid{grid-template-columns:repeat(2,1fr)}
   .biz-card:last-child{grid-column:1/3}
   .region-card{grid-template-columns:160px 1fr;gap:24px;padding:24px}
@@ -524,9 +552,98 @@ footer{position:relative;background:var(--ink);border-top:1px solid var(--border
   .inquiry-ctas .btn{justify-content:center}
 }
 @media(max-width:480px){
-  .exp-grid{grid-template-columns:1fr}
   .about-photos{grid-template-columns:1fr;grid-template-rows:220px 140px 140px}
   .about-photo-main{grid-column:1/2}
   .inquiry-tags{flex-direction:column;gap:8px}
   .inquiry-tags span:not(:last-child)::after{display:none}
+}
+
+/* ══ MOBILE POLISH ══ */
+@media(max-width:768px){
+  /* Tighten section vertical padding */
+  #about,#events,#experiences,#gallery,#visit,
+  .explore,.biz,.region,.feat,.pintro,.also,.upcoming-shows{padding-top:60px;padding-bottom:60px}
+  .inquiry,.cta-band{padding-top:72px;padding-bottom:72px}
+  /* Rein in extreme letter-spacing that overflows small screens */
+  .hero-place{letter-spacing:.22em}
+  .page-hero-place{letter-spacing:.2em}
+  /* Also-home CTA full width */
+  .also-home{width:100%;justify-content:center}
+  /* Hero apply link */
+  .hero-apply-link{padding:14px 20px}
+  /* Back-home: pull out of absolute positioning, flow naturally above the hero content */
+  .page-hero{flex-direction:column;align-items:flex-start;justify-content:flex-start;padding-top:74px}
+  .back-home{position:relative;top:auto;left:auto;margin:14px 0 0 clamp(20px,3.5%,72px)}
+  .page-hero-inner{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;padding-top:20px;padding-bottom:32px}
+  /* Lighter section divider glow — heavy spread looks bulky on small screens */
+  section + section,section + footer{box-shadow:0 -8px 18px -2px rgba(196,87,26,.32),inset 0 4px 16px -4px rgba(196,87,26,.32)}
+  /* Buttons: meet 44px touch-target minimum */
+  .btn{padding:15px 26px;min-height:44px}
+  /* Footer: stack & center on mobile */
+  .footer-concept{text-align:left;max-width:none}
+  .footer-bottom{justify-content:flex-start}
+  /* Visit photos: shorter and stack to single column on mobile */
+  .visit-photos{grid-template-columns:1fr;grid-template-rows:repeat(3,200px)}
+  .vphoto:first-child{grid-column:auto}
+  /* Smaller hero acorn on mobile */
+  .hero-acorn{width:64px;height:64px}
+  /* Region card: lighter mark, no fixed 160px column on tablet/mobile */
+  .region-mark-inner{font-size:36px}
+  /* Apply form button full-width is already set at 600px — also bump touch target */
+  .apply-form button[type=submit]{padding:16px 28px;min-height:48px}
+  /* Modal close — already 44px on mobile (line 137) */
+}
+@media(max-width:480px){
+  /* Further reduce section padding on tiny screens */
+  #about,#events,#experiences,#gallery,#visit,
+  .explore,.biz,.region,.feat,.pintro,.also,.upcoming-shows{padding-top:48px;padding-bottom:48px}
+  .inquiry,.cta-band{padding-top:56px;padding-bottom:56px}
+  /* Reduce hero sub font on tiny screens */
+  .hero-sub,.page-hero-sub{font-size:15px}
+  .back-home{font-size:10px;padding:8px 13px}
+  /* Hero h1: 58px floor overflows ~320px screens — scale down */
+  .hero-h1{font-size:clamp(44px,13vw,72px)}
+  .page-hero-h{font-size:clamp(40px,12vw,68px)}
+  /* Big section headings */
+  .events-h,.exp-h,.gallery-h,.visit-h,.about-h,.explore-h,.biz-h,.region-h,.inquiry-h,.cta-band-h,.feat-h,.pintro-h,.comm-h{font-size:clamp(30px,8.5vw,46px)}
+  .also-h{font-size:clamp(26px,7.5vw,38px)}
+  /* Hours rows: smaller font, prevent overflow */
+  .hours-row{font-size:12px}
+  .hours-day{font-size:12px}
+  /* Event card padding tighter */
+  .ev-top{padding:18px 16px 14px;gap:12px}
+  .ev-bot{padding:10px 16px}
+  .ev-date{min-width:48px;padding:8px 10px}
+  .ev-day{font-size:24px}
+  /* Visit address card padding tighter */
+  .visit-addr{padding:14px 16px}
+  /* Card padding tighter */
+  .biz-card{padding:24px 20px 22px}
+  .also-card{padding:20px}
+  .feat-card{padding:24px 20px}
+  .region-card{padding:24px 18px}
+  .region-mark{max-width:140px}
+  /* Hero apply: tighter on tiny screens */
+  .hero-apply-link{padding:14px 18px}
+  .hero-apply-body{font-size:12.5px}
+  /* Section padding sides slightly tighter */
+  .inquiry,.cta-band,.feat,.pintro,.also,.explore,.biz,.region,
+  #about,#events,#experiences,#gallery,#visit,#hero,.page-hero,.upcoming-shows{padding-left:18px;padding-right:18px}
+  /* Modal: tighter apply-form padding */
+  .apply-form{gap:12px}
+  .apply-form input,.apply-form textarea,.apply-form select{padding:12px 12px}
+  /* Nav brand text shrink so the hamburger has room */
+  .nav-name{font-size:15px}
+  .nav-sub{font-size:7px}
+  .nav-acorn{width:32px;height:32px}
+}
+/* Tiny phones (≤360px) — extra-narrow overrides */
+@media(max-width:360px){
+  .hero-h1{font-size:clamp(40px,14vw,56px)}
+  .page-hero-h{font-size:clamp(36px,13vw,52px)}
+  .nav-brand-wrap{display:none}
+  .hero-stamp,.page-hero-stamp{font-size:9px;letter-spacing:.2em;padding:4px 12px}
+  .hero-place,.page-hero-place{font-size:11px;letter-spacing:.18em}
+  .ev-top{flex-direction:column;align-items:flex-start}
+  .ev-actions{flex-wrap:wrap;gap:8px}
 }
