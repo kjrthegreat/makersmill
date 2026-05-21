@@ -6,7 +6,13 @@ import { Footer } from '@/components/Footer';
 export const metadata: Metadata = {
   title: 'Bar & Food — The Makers Mill, Somerset, KY',
   description:
-    'Bar & Food at The Makers Mill — craft brews, cocktails, and fresh-made food in downtown Somerset, KY. The room where the night actually happens, at 402 E. Mt. Vernon St.'
+    'Bar & Food at The Makers Mill — craft brews, cocktails, and fresh-made food in downtown Somerset, KY. The room where the night actually happens at 402 E. Mt. Vernon St.',
+  openGraph: {
+    title: 'Bar & Food — The Makers Mill, Somerset, KY',
+    description: 'Craft brews, cocktails, and fresh-made food. The room where the night actually happens at The Makers Mill in downtown Somerset.',
+    images: [{ url: 'https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_003-1024x683.jpg', width: 1024, height: 683 }]
+  },
+  twitter: { card: 'summary_large_image' }
 };
 
 type Feature = {

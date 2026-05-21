@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 // TODO: replace '#' with the real ticketing URL when available
@@ -19,6 +20,13 @@ export function Footer() {
       <div className="footer-inner">
         <div className="footer-top">
           <div className="footer-brand">
+            <Image
+              className="footer-acorn"
+              src="/acorn.png"
+              alt="The Makers Mill"
+              width={40}
+              height={40}
+            />
             <div className="footer-brand-text">
               <div className="footer-name">The Makers Mill</div>
               <div className="footer-tagline">

@@ -6,7 +6,13 @@ import { Footer } from '@/components/Footer';
 export const metadata: Metadata = {
   title: 'Pilates — Movement Studio at The Makers Mill, Somerset, KY',
   description:
-    'A pilates studio inside The Makers Mill in downtown Somerset, KY — classes and sessions in a beautifully restored space at 402 E. Mt. Vernon St.'
+    'A pilates studio inside The Makers Mill in downtown Somerset, KY — mat classes, equipment sessions, and small-group options in a beautifully restored space at 402 E. Mt. Vernon St.',
+  openGraph: {
+    title: 'Pilates — Movement Studio at The Makers Mill, Somerset, KY',
+    description: 'Mat classes, equipment sessions, and small-group pilates inside The Makers Mill in downtown Somerset, KY.',
+    images: [{ url: 'https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_013-1024x682.jpg', width: 1024, height: 682 }]
+  },
+  twitter: { card: 'summary_large_image' }
 };
 
 // TODO: replace with real booking URL or contact for Pilates studio

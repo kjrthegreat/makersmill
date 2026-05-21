@@ -6,10 +6,16 @@ import { Footer } from '@/components/Footer';
 export const metadata: Metadata = {
   title: 'Soul House — Inside The Makers Mill, Somerset, KY',
   description:
-    'Soul House operates inside The Makers Mill in downtown Somerset, KY — a distinct space sharing the building with the makers and the music at 402 E. Mt. Vernon St.'
+    'Soul House is a creative community space inside The Makers Mill in downtown Somerset, KY — events, gatherings, and a room with its own energy at 402 E. Mt. Vernon St.',
+  openGraph: {
+    title: 'Soul House — Inside The Makers Mill, Somerset, KY',
+    description: 'A creative community space with its own energy — Soul House operates inside The Makers Mill in downtown Somerset, KY.',
+    images: [{ url: 'https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_019-1024x682.jpg', width: 1024, height: 682 }]
+  },
+  twitter: { card: 'summary_large_image' }
 };
 
-// TODO: replace with real Soul House contact or social URL
+// TODO: replace with real Soul House contact, booking, or social URL
 const CONTACT_HREF = 'mailto:makersmillsomerset@gmail.com';
 
 type Feature = {
@@ -19,24 +25,25 @@ type Feature = {
   desc: string;
 };
 
+// TODO: update these with real Soul House programming and offerings once confirmed
 const FEATURES: Feature[] = [
   {
     n: '01',
-    icon: '🏠',
-    title: 'Their Own Space',
-    desc: "Soul House has its own distinct identity inside the Mill — a room with its own vibe and purpose."
+    icon: '🎉',
+    title: 'Events & Gatherings',
+    desc: 'Soul House hosts its own events inside the Mill — community nights, pop-ups, and gatherings with a distinct energy.'
   },
   {
     n: '02',
-    icon: '🤝',
-    title: 'Part of the Mill',
-    desc: 'Sharing walls with the stage, the bar, and the vendors — connected to everything Makers Mill is building.'
+    icon: '🎨',
+    title: 'Creative Space',
+    desc: 'A room dedicated to creative community — workshops, showcases, and experiences that don\'t fit the usual mold.'
   },
   {
     n: '03',
-    icon: '📬',
-    title: 'Get in Touch',
-    desc: 'Reach out directly to Soul House or stop by the Mill to see what they have going on.'
+    icon: '🤝',
+    title: 'Part of Something Bigger',
+    desc: 'Sharing the building with the Stage, the bar, and the makers — connected to everything that makes the Mill a destination.'
   }
 ];
 
@@ -55,21 +62,22 @@ export default function SoulHousePage() {
             alt="Soul House inside The Makers Mill in Somerset, Kentucky"
           />
         </div>
-        <div className="page-hero-glow"></div>
+        <div className="page-hero-glow" />
         <Link href="/" className="back-home" aria-label="Back to Makers Mill home">Back to Makers Mill</Link>
         <div className="page-hero-inner">
-          <div className="page-hero-stamp rev">✦ Soul House · Inside the Mill ✦</div>
+          <div className="page-hero-stamp rev">✦ Soul House · Community Space ✦</div>
           <h1 className="page-hero-h rev" style={{ transitionDelay: '.1s' }}>
-            ITS OWN
+            SOUL
             <br />
-            <em>THING.</em>
+            <em>HOUSE.</em>
           </h1>
           <div className="page-hero-place rev" style={{ transitionDelay: '.2s' }}>
             Inside The Makers Mill · Somerset, KY
           </div>
           <p className="page-hero-sub rev" style={{ transitionDelay: '.28s' }}>
-            Soul House operates inside The Makers Mill — a distinct space sharing the building
-            with the makers, the music, and everything else that makes the Mill a destination.
+            {/* TODO: update with real Soul House tagline once the brand is defined */}
+            A creative community space operating inside The Makers Mill — events, gatherings, and
+            a room with its own distinct energy.
           </p>
           <div className="page-hero-ctas rev" style={{ transitionDelay: '.36s' }}>
             <a href={CONTACT_HREF} className="btn btn-fill">
@@ -88,21 +96,25 @@ export default function SoulHousePage() {
           <div className="rev-l">
             <div className="label">About Soul House</div>
             <h2 className="pintro-h">
-              Distinct Space.
+              {/* TODO: update headline with real Soul House brand voice */}
+              Community.
               <br />
-              <em>Shared Building.</em>
+              <em>Culture. Space.</em>
             </h2>
+            {/* TODO: replace with real Soul House description and programming details */}
             <p className="pintro-p">
-              Soul House is its own brand inside Makers Mill — it has its own identity, its own
-              space, and its own thing going on. It shares the building with the stage, the bar,
-              the vendors, and the other businesses that make the Mill what it is.
+              Soul House is its own brand with its own identity inside Makers Mill. They run events,
+              host gatherings, and use the space in ways that feel distinct from anything else in the
+              building — it&apos;s a room that knows what it&apos;s for.
             </p>
             <p className="pintro-p">
-              Stop in and see what&apos;s happening, or get in touch directly to find out more
-              about what Soul House has going on.
+              Part of what makes the Mill interesting is that spaces like Soul House exist within it
+              — independent operations sharing a building but doing their own thing. Stop in, see
+              what&apos;s on, or get in touch to find out more about what they have going.
             </p>
           </div>
           <div className="pintro-photos rev-r">
+            {/* TODO: swap for real Soul House photos once available */}
             <div className="pintro-photo-main">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -121,7 +133,7 @@ export default function SoulHousePage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_024-1024x682.jpg"
-                alt="The Makers Mill interior detail"
+                alt="The Makers Mill interior — gathering space"
               />
             </div>
           </div>
@@ -133,18 +145,22 @@ export default function SoulHousePage() {
         <div className="feat-inner">
           <div className="feat-head rev">
             <div className="label" style={{ justifyContent: 'center' }}>
-              What They&apos;re About
+              {/* TODO: update label with real Soul House programming category */}
+              What They Do
             </div>
             <h2 className="feat-h">
+              {/* TODO: replace with real Soul House offerings headline */}
               Their Space.
               <br />
-              <em>Their Terms.</em>
+              <em>Their Way.</em>
             </h2>
             <p className="feat-sub">
-              Soul House does its own thing inside the Mill — here&apos;s how they fit into the bigger picture.
+              {/* TODO: replace with real description of Soul House programming */}
+              Soul House brings its own energy to the Mill — here&apos;s how they use the space.
             </p>
           </div>
           <div className="feat-grid">
+            {/* TODO: update feature cards with real Soul House programming details in the array above */}
             {FEATURES.map((f, i) => (
               <div key={f.n} className="feat-card rev" style={{ transitionDelay: `${i * 0.07}s` }}>
                 <div className="feat-n">{f.n}</div>
@@ -169,7 +185,7 @@ export default function SoulHousePage() {
             <em>What&apos;s Here.</em>
           </h2>
           <p className="cta-band-p rev" style={{ transitionDelay: '.16s' }}>
-            Stop by the Mill to see Soul House in person, or get in touch ahead of time.
+            Stop by the Mill to see Soul House in person, or reach out ahead of your visit.
           </p>
           <div className="cta-band-ctas rev" style={{ transitionDelay: '.24s' }}>
             <a href={CONTACT_HREF} className="btn btn-fill">
@@ -194,14 +210,14 @@ export default function SoulHousePage() {
             <em>One Roof.</em>
           </h2>
           <p className="also-sub rev" style={{ transitionDelay: '.16s' }}>
-            Soul House is one of several businesses inside Makers Mill.
+            Soul House is one of several businesses operating inside Makers Mill.
           </p>
           <div className="also-grid">
             <Link href="/businesses/print-ghost" className="also-card rev" style={{ transitionDelay: '.2s' }}>
               <div className="also-label">Print Studio</div>
               <div className="also-name">Print Ghost</div>
               <p className="also-desc">
-                An independent print studio — screen printing and original graphic work.
+                An independent print studio — screen printing and original graphic work made right here.
               </p>
               <span className="also-arrow">Learn More →</span>
             </Link>
@@ -209,7 +225,7 @@ export default function SoulHousePage() {
               <div className="also-label">Movement</div>
               <div className="also-name">Pilates</div>
               <p className="also-desc">
-                A pilates studio inside the Mill — classes and sessions in a restored space.
+                A pilates studio inside the Mill — classes and sessions in a beautifully restored space.
               </p>
               <span className="also-arrow">Learn More →</span>
             </Link>

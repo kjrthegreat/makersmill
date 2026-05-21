@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 type Business = {
   label: string;
   name: string;
@@ -9,24 +11,22 @@ const BUSINESSES: Business[] = [
   {
     label: 'Print Studio',
     name: 'Print Ghost',
-    desc: "An independent print studio working out of The Makers Mill. Stop in to see what they're making.",
+    desc: "An independent print studio working out of The Makers Mill — screen printing, original graphics, and custom work made right here.",
     href: '/businesses/print-ghost'
   },
   {
     label: 'Movement',
     name: 'Pilates',
-    desc: 'A pilates studio inside the Mill — classes and sessions in a beautifully restored space.',
+    desc: 'A pilates studio inside the Mill — mat classes, equipment sessions, and small-group options in a beautifully restored space.',
     href: '/businesses/pilates'
   },
   {
-    label: 'In the Mill',
+    label: 'Community Space',
     name: 'Soul House',
-    desc: 'Soul House operates inside the Mill — a distinct space sharing the building with the makers and the music.',
+    desc: 'Soul House operates inside the Mill — a creative community space with its own events, gatherings, and distinct energy.',
     href: '/businesses/soul-house'
   }
 ];
-
-import Link from 'next/link';
 
 export function Businesses() {
   return (
@@ -47,15 +47,19 @@ export function Businesses() {
           </p>
         </div>
         <div className="biz-grid">
+          {/* Each card is a full <Link> so the entire card is clickable, not just the label */}
           {BUSINESSES.map((b, i) => (
-            <div key={b.name} className="biz-card rev" style={{ transitionDelay: `${i * 0.08}s` }}>
+            <Link
+              key={b.name}
+              href={b.href}
+              className="biz-card rev"
+              style={{ transitionDelay: `${i * 0.08}s` }}
+            >
               <div className="biz-label">{b.label}</div>
               <h3 className="biz-name">{b.name}</h3>
               <p className="biz-desc">{b.desc}</p>
-              <Link href={b.href} className="biz-cta">
-                Learn More →
-              </Link>
-            </div>
+              <span className="biz-cta">Learn More →</span>
+            </Link>
           ))}
         </div>
       </div>

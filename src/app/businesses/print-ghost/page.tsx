@@ -6,7 +6,13 @@ import { Footer } from '@/components/Footer';
 export const metadata: Metadata = {
   title: 'Print Ghost — Print Studio at The Makers Mill, Somerset, KY',
   description:
-    'Print Ghost is an independent print studio operating inside The Makers Mill in downtown Somerset, KY. Screen printing, original graphic work, and custom orders at 402 E. Mt. Vernon St.'
+    'Print Ghost is an independent print studio inside The Makers Mill in downtown Somerset, KY — screen printing, original graphics, and custom orders at 402 E. Mt. Vernon St.',
+  openGraph: {
+    title: 'Print Ghost — Independent Print Studio at The Makers Mill',
+    description: 'Screen printing, original graphic work, and custom orders — Print Ghost operates out of The Makers Mill in downtown Somerset, KY.',
+    images: [{ url: 'https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_002-1024x682.jpg', width: 1024, height: 682 }]
+  },
+  twitter: { card: 'summary_large_image' }
 };
 
 // TODO: replace '#' with Print Ghost's real contact or social URL

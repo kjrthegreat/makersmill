@@ -3,74 +3,52 @@ import type { Metadata } from 'next';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
 import { ApplyButton } from '@/components/ApplyButton';
+import { VENDORS } from '@/lib/vendors';
 
 export const metadata: Metadata = {
-  title: 'Vendors — Local Makers & Vintage Finds in Somerset, KY | The Makers Mill',
+  title: 'Vendors — Local Makers & Shops at The Makers Mill, Somerset, KY',
   description:
-    "Vendors at The Makers Mill — handmade goods from Somerset's local makers, curated vintage finds, and one-of-a-kind pieces. New stuff every visit at 402 E. Mt. Vernon St."
-};
-
-const CONTACT_HREF = 'mailto:makersmillsomerset@gmail.com';
-
-type Feature = {
-  n: string;
-  icon: string;
-  title: string;
-  desc: string;
-};
-
-const FEATURES: Feature[] = [
-  {
-    n: '01',
-    icon: '🎨',
-    title: 'Local Makers',
-    desc: "Pottery, jewelry, paintings, sculptures — work from Somerset's creative community."
+    "Browse local vendors inside The Makers Mill — handmade goods, original art, vintage finds, jewelry, candles, and more from Somerset's creative community at 402 E. Mt. Vernon St.",
+  openGraph: {
+    title: 'Vendors — Local Makers & Shops at The Makers Mill, Somerset, KY',
+    description: "Handmade goods, original art, vintage, jewelry, candles, and more — every local maker inside The Makers Mill in downtown Somerset.",
+    images: [{ url: 'https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_004-1024x682.jpg', width: 1024, height: 682 }]
   },
-  {
-    n: '02',
-    icon: '✋',
-    title: 'Handmade Goods',
-    desc: "One-of-a-kind pieces made by hand. You won't find these on a shelf anywhere else."
-  },
-  {
-    n: '03',
-    icon: '🪺',
-    title: 'Vintage Finds',
-    desc: 'Curated vintage clothing, furniture, windows, and rotating one-of-a-kind pieces.'
-  }
-];
+  twitter: { card: 'summary_large_image' }
+};
 
 export default function VendorsPage() {
   return (
     <>
       <Nav />
 
-      {/* ── HERO ── */}
+      {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section className="page-hero">
         <div className="page-hero-bg">
-          {/* TODO: swap for a real store / makers-market hero photo once available */}
+          {/* TODO: swap for a real makers-market or vendor-floor hero photo once available */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_004-1024x682.jpg"
-            alt="Vendors at The Makers Mill — local makers and vintage finds in Somerset, Kentucky"
+            alt="Vendors at The Makers Mill — local makers and handmade goods in Somerset, Kentucky"
           />
         </div>
-        <div className="page-hero-glow"></div>
-        <Link href="/" className="back-home" aria-label="Back to Makers Mill home">Back to Makers Mill</Link>
+        <div className="page-hero-glow" />
+        <Link href="/" className="back-home" aria-label="Back to Makers Mill home">
+          Back to Makers Mill
+        </Link>
         <div className="page-hero-inner">
-          <div className="page-hero-stamp rev">✦ Vendors · Local Makers ✦</div>
+          <div className="page-hero-stamp rev">✦ Meet the Vendors · Local Makers ✦</div>
           <h1 className="page-hero-h rev" style={{ transitionDelay: '.1s' }}>
-            FROM LOCAL
+            LOCAL
             <br />
-            <em>MAKERS</em>
-            TO YOU.
+            <em>MAKERS.</em>
           </h1>
           <div className="page-hero-place rev" style={{ transitionDelay: '.2s' }}>
             Downtown Somerset, KY
           </div>
           <p className="page-hero-sub rev" style={{ transitionDelay: '.28s' }}>
-            Handmade goods, art, and curated vintage from Somerset&apos;s makers — new stuff every
-            visit from the Vendors inside Makers Mill.
+            Handmade goods, original art, curated vintage, jewelry, candles, and more — every
+            vendor inside The Makers Mill, all in one place.
           </p>
           <div className="page-hero-ctas rev" style={{ transitionDelay: '.36s' }}>
             <Link href="/#visit" className="btn btn-fill">
@@ -83,84 +61,76 @@ export default function VendorsPage() {
         </div>
       </section>
 
-      {/* ── OVERVIEW ── */}
-      <section className="pintro">
-        <div className="pintro-inner">
-          <div className="rev-l">
-            <div className="label">About the Vendors</div>
-            <h2 className="pintro-h">
-              Browse Unique.
-              <br />
-              <em>Support Local.</em>
-            </h2>
-            <p className="pintro-p">
-              Our vendors are the artisan side of Makers Mill — a curated retail floor of work by
-              Somerset&apos;s creative community, alongside hand-picked vintage. Pieces rotate
-              regularly, so the shop you walk through this weekend won&apos;t be the same one as
-              last month.
-            </p>
-            <p className="pintro-p">
-              Every purchase here lands in the pocket of a local maker or keeps a vintage piece
-              moving on to its next life. A nicer way to take something home from your visit.
-            </p>
-          </div>
-          <div className="pintro-photos rev-r">
-            <div className="pintro-photo-main">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_005-1024x682.jpg"
-                alt="Handmade goods from the Vendors at The Makers Mill"
-              />
-            </div>
-            <div className="pintro-photo-sm">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_007-1024x682.jpg"
-                alt="Artisan goods inside The Makers Mill"
-              />
-            </div>
-            <div className="pintro-photo-sm">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_010-1024x682.jpg"
-                alt="Local maker display from a Vendor at The Makers Mill"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── FEATURES ── */}
-      <section id="vendors-features" className="feat">
-        <div className="feat-inner">
-          <div className="feat-head rev">
+      {/* ── VENDOR DIRECTORY ──────────────────────────────────────────────── */}
+      <section className="vdir">
+        <div className="vdir-inner">
+          {/* Section header */}
+          <div className="vdir-head rev">
             <div className="label" style={{ justifyContent: 'center' }}>
-              What You&apos;ll Find
+              Browse the Vendors
             </div>
-            <h2 className="feat-h">
-              Made Here.
+            <h2 className="vdir-h">
+              Local Makers.
               <br />
-              <em>Found Here.</em>
+              <em>All in One Place.</em>
             </h2>
-            <p className="feat-sub">
-              The Vendors rotate regularly. These are the three things you can count on every
-              visit.
+            <p className="vdir-sub">
+              Every maker, shop, and artist inside The Makers Mill — handmade goods, curated
+              vintage, original art, and more. Inventory rotates, so there&apos;s always something
+              new to discover.
             </p>
           </div>
-          <div className="feat-grid">
-            {FEATURES.map((f, i) => (
-              <div key={f.n} className="feat-card rev" style={{ transitionDelay: `${i * 0.07}s` }}>
-                <div className="feat-n">{f.n}</div>
-                <div className="feat-icon">{f.icon}</div>
-                <div className="feat-title">{f.title}</div>
-                <div className="feat-desc">{f.desc}</div>
-              </div>
+
+          {/* Vendor card grid */}
+          {/* TODO: add new vendors by appending to the VENDORS array in src/lib/vendors.ts */}
+          <div className="vgrid">
+            {VENDORS.map((vendor, i) => (
+              <Link
+                key={vendor.slug}
+                href={`/vendors/${vendor.slug}`}
+                className="vcard rev"
+                style={{
+                  // Sets the accent color CSS variable for each card.
+                  // Remove once real logos are added and the color-coded initial is no longer needed.
+                  ['--vc-accent' as string]: vendor.accent,
+                  transitionDelay: `${(i % 3) * 0.08}s`,
+                }}
+              >
+                {/* Card top — logo placeholder + category tags */}
+                <div className="vcard-top">
+                  {/* Logo placeholder: shows the vendor's initial until a real logo is supplied */}
+                  {/* TODO: replace .vcard-initial-wrap with a real <img> logo once available */}
+                  <div className="vcard-initial-wrap">
+                    <span className="vcard-initial">{vendor.initial}</span>
+                  </div>
+                  <div className="vcard-tag-row">
+                    {/* TODO: update categories in vendors.ts with real vendor tags */}
+                    {vendor.categories.map((cat) => (
+                      <span key={cat} className="vcard-cat">{cat}</span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Card body — name, description, CTA */}
+                <div className="vcard-body">
+                  {/* TODO: replace with real vendor name in vendors.ts */}
+                  <div className="vcard-name">{vendor.name}</div>
+                  {/* TODO: replace with real vendor description in vendors.ts */}
+                  <p className="vcard-desc">{vendor.description}</p>
+                  <span className="vcard-cta">Explore Shop →</span>
+                </div>
+              </Link>
             ))}
           </div>
+
+          {/* Placeholder notice — remove once real vendor info is loaded */}
+          <p className="events-note-foot rev" style={{ marginTop: 28 }}>
+            Placeholder vendors shown — real maker names, photos, and descriptions coming soon.
+          </p>
         </div>
       </section>
 
-      {/* ── APPLY FOR SPACE (modal trigger) ── */}
+      {/* ── APPLY FOR A SPACE ─────────────────────────────────────────────── */}
       <section id="apply" className="inquiry">
         <div className="inquiry-inner">
           <div className="label rev" style={{ justifyContent: 'center' }}>
@@ -173,9 +143,12 @@ export default function VendorsPage() {
           </h2>
           <p className="inquiry-p rev" style={{ transitionDelay: '.16s' }}>
             Makers, vintage curators, small businesses — if your work would feel at home on the
-            Vendor floor, we want to hear from you. Hit the button and we&apos;ll be in touch.
+            vendor floor, we want to hear from you. Hit the button and we&apos;ll be in touch.
           </p>
-          <div className="inquiry-tags rev" style={{ transitionDelay: '.24s', marginBottom: 28 }}>
+          <div
+            className="inquiry-tags rev"
+            style={{ transitionDelay: '.24s', marginBottom: 28 }}
+          >
             <span>Local Makers</span>
             <span>Vintage Curators</span>
             <span>Small Businesses</span>
@@ -183,9 +156,12 @@ export default function VendorsPage() {
           <div className="inquiry-ctas rev" style={{ transitionDelay: '.32s' }}>
             <ApplyButton className="btn btn-fill">Apply for a Space</ApplyButton>
           </div>
-          <p className="inquiry-p rev" style={{ transitionDelay: '.4s', marginTop: 28, fontSize: 13 }}>
+          <p
+            className="inquiry-p rev"
+            style={{ transitionDelay: '.4s', marginTop: 28, fontSize: 13 }}
+          >
             Prefer email? Reach out at{' '}
-            <a href={CONTACT_HREF} style={{ color: 'var(--orange)' }}>
+            <a href="mailto:makersmillsomerset@gmail.com" style={{ color: 'var(--orange)' }}>
               makersmillsomerset@gmail.com
             </a>
             .
@@ -193,7 +169,7 @@ export default function VendorsPage() {
         </div>
       </section>
 
-      {/* ── ALSO AT THE MILL ── */}
+      {/* ── ALSO AT THE MILL ──────────────────────────────────────────────── */}
       <section className="also">
         <div className="also-inner">
           <div className="label rev" style={{ justifyContent: 'center' }}>
@@ -205,14 +181,14 @@ export default function VendorsPage() {
             <em>One Roof.</em>
           </h2>
           <p className="also-sub rev" style={{ transitionDelay: '.16s' }}>
-            The Vendors are one of three. Take a look at the rest of Makers Mill.
+            The vendors are one part of the picture. Take a look at the rest of Makers Mill.
           </p>
           <div className="also-grid">
             <Link href="/stage" className="also-card rev" style={{ transitionDelay: '.2s' }}>
               <div className="also-label">Live Music</div>
               <div className="also-name">The Stage</div>
               <p className="also-desc">
-                Live music, ticketed shows, and the loudest nights downtown.
+                Live music, ticketed shows, and the loudest nights in downtown Somerset.
               </p>
               <span className="also-arrow">Explore The Stage →</span>
             </Link>

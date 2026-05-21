@@ -5,9 +5,15 @@ import { Footer } from '@/components/Footer';
 import { PerformerInquiryButton } from '@/components/PerformerInquiryButton';
 
 export const metadata: Metadata = {
-  title: 'The Stage — Live Music in Somerset, KY | The Makers Mill',
+  title: 'The Stage — Live Music in Somerset, KY',
   description:
-    "The Stage at The Makers Mill — live music, ticketed shows, and Saturday sets in downtown Somerset, KY. Local songwriters to touring acts, all under one roof at 402 E. Mt. Vernon St."
+    "The Stage at The Makers Mill — live music, ticketed shows, and Saturday sets in downtown Somerset, KY. Local songwriters to touring acts, all under one roof at 402 E. Mt. Vernon St.",
+  openGraph: {
+    title: 'The Stage — Live Music at The Makers Mill, Somerset, KY',
+    description: 'Live music, ticketed shows, and Saturday sets. Local songwriters to touring acts — all under one roof downtown.',
+    images: [{ url: 'https://rcmediaservices.net/wp-content/uploads/2024/08/MakersMill_020-1024x682.jpg', width: 1024, height: 682 }]
+  },
+  twitter: { card: 'summary_large_image' }
 };
 
 // TODO: replace '#' with the real ticketing URL when available
