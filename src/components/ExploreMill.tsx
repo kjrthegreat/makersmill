@@ -96,6 +96,23 @@ export function ExploreMill() {
             </Link>
           ))}
         </div>
+        <div className="explore-extras rev" style={{ transitionDelay: '.28s' }}>
+          <div className="explore-extras-label">Also inside the Mill</div>
+          <div className="explore-extras-row">
+            <Link href="/#experiences" className="explore-extra-pill">
+              🎱 Pool
+            </Link>
+            <Link href="/#experiences" className="explore-extra-pill">
+              🕹️ Arcade
+            </Link>
+            <Link href="/#experiences" className="explore-extra-pill">
+              🎤 Open Mic
+            </Link>
+            <Link href="/#experiences" className="explore-extra-pill">
+              🧠 Trivia Nights
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

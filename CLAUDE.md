@@ -5,7 +5,7 @@ Somerset, KY venue/marketplace site. Original build was a single `index.html`; m
 ## Stack
 - **Next.js 15** (App Router) + **React 19** + **TypeScript**
 - Plain global CSS — no Tailwind. All styles live in `src/app/globals.css` and preserve the original hand-crafted design system.
-- No backend yet. Site is static — `next build` output deploys cleanly to Cloudflare Pages, Vercel, or any static host.
+- **Supabase** — auth (email+password), Postgres DB, Storage (vendor-assets + product-images buckets). Added 2026-05-17.
 - Repo: `zak1269/makersmill`.
 
 ## Setup
@@ -20,19 +20,70 @@ npm start
 ```
 src/
 ├── app/
-│   ├── layout.tsx        — root layout, font preconnect, RevealObserver mount
-│   ├── globals.css       — full design system + section styles
-│   ├── page.tsx          — homepage composition
-│   ├── stage/page.tsx    — placeholder (per roadmap)
-│   ├── bar/page.tsx      — placeholder (per roadmap)
-│   └── store/page.tsx    — placeholder (per roadmap)
-└── components/
-    ├── Nav.tsx           — client; scroll state, mobile menu, active-section highlight
-    ├── RevealObserver.tsx — client; IntersectionObserver for `.rev/.rev-l/.rev-r` reveal classes
-    ├── Hero.tsx, About.tsx, Experiences.tsx, Events.tsx,
-    ├── Gallery.tsx, Community.tsx, Visit.tsx, Contact.tsx, Footer.tsx
+│   ├── layout.tsx                        — root layout, font preconnect, RevealObserver mount
+│   ├── globals.css                       — full design system + all section + dashboard styles
+│   ├── page.tsx                          — homepage composition
+│   ├── stage/page.tsx                    — The Stage sub-page
+│   ├── bar-food/page.tsx                 — Bar & Food sub-page
+│   ├── vendors/
+│   │   ├── page.tsx                      — public vendor directory (live from Supabase)
+│   │   └── [slug]/page.tsx               — individual vendor page (dynamic SSR)
+│   │                                       order: Hero → Shop → About → Gallery → slim footer nav
+│   ├── businesses/
+│   │   ├── print-ghost/page.tsx
+│   │   ├── pilates/page.tsx
+│   │   └── soul-house/page.tsx
+│   ├── vendor/
+│   │   ├── login/page.tsx                — vendor auth
+│   │   ├── signup/page.tsx
+│   │   ├── reset-password/page.tsx
+│   │   └── dashboard/
+│   │       ├── layout.tsx                — sidebar layout (div.dash-nav, not nav — avoids global nav CSS)
+│   │       ├── page.tsx                  — dashboard home (stat cards)
+│   │       ├── profile/page.tsx          — profile editor (7 sections)
+│   │       ├── products/
+│   │       │   ├── page.tsx              — product list
+│   │       │   ├── new/page.tsx          — add product
+│   │       │   └── [id]/page.tsx         — edit product
+│   │       └── settings/page.tsx
+│   ├── admin/
+│   │   ├── layout.tsx                    — admin sidebar (div.dash-nav, checks admin role)
+│   │   ├── page.tsx                      — admin dashboard
+│   │   ├── applications/page.tsx         — vendor application queue
+│   │   ├── vendors/
+│   │   │   ├── page.tsx                  — all vendors list
+│   │   │   └── [id]/page.tsx             — edit any vendor (full profile + products inline)
+│   │   ├── products/page.tsx             — all products across all vendors
+│   │   └── settings/page.tsx
+│   ├── api/auth/callback/route.ts        — Supabase auth code exchange → redirect to dashboard
+│   ├── robots.ts                         — robots.txt generation
+│   └── sitemap.ts                        — sitemap generation
+├── components/
+│   ├── Nav.tsx                           — client; scroll state, mobile menu
+│   ├── RevealObserver.tsx                — client; IntersectionObserver for .rev/.rev-l/.rev-r
+│   ├── Footer.tsx
+│   ├── Hero.tsx, About.tsx, Experiences.tsx, Events.tsx,
+│   ├── Gallery.tsx, Community.tsx, Visit.tsx, Contact.tsx
+│   ├── ProfileForm.tsx                   — client; 7-section vendor profile editor with ImageUpload
+│   ├── AdminVendorForm.tsx               — client; admin edit of any vendor (all fields + admin controls)
+│   ├── ProductForm.tsx                   — client; add/edit product with ImageUpload
+│   ├── ImageUpload.tsx                   — client; drag-and-drop or click → Supabase Storage; URL fallback
+│   ├── ProductActions.tsx                — client; publish/unpublish/delete product
+│   ├── AdminProductActions.tsx           — client; admin product moderation
+│   ├── VendorAdminActions.tsx            — client; activate/suspend/feature/delete + Edit link
+│   ├── ApplicationActions.tsx            — client; approve/reject vendor applications
+│   ├── DashLogout.tsx                    — client; sign out + redirect to /vendor/login
+│   └── ApplyButton.tsx                   — client; opens vendor application modal
+├── lib/supabase/
+│   ├── client.ts                         — browser Supabase client (createBrowserClient)
+│   └── server.ts                         — server Supabase client (cookie-based, App Router)
+├── types/
+│   └── vendor.ts                         — TypeScript interfaces for all DB entities + PRODUCT_CATEGORIES
+└── middleware.ts                         — protects /vendor/dashboard/* and /admin/*
 public/
-└── acorn.png             — extracted from the original inline base64 logo
+└── acorn.png                             — extracted from the original inline base64 logo
+supabase/
+└── schema.sql                            — full DB schema (run in Supabase SQL editor to bootstrap)
 ```
 
 ## Design language (locked in)
@@ -44,10 +95,13 @@ public/
 ## Conventions
 - New top-level pages live under `src/app/<route>/page.tsx`. Reuse `<Nav />` and `<Footer />`.
 - Section-level content stays in `src/components/`. Keep data arrays at the top of each component until they're needed in two places.
-- Remote photos load from `rcmediaservices.net` (whitelisted in `next.config.mjs`). Inline `<img>` is fine for now — `next/image` is only used for the local acorn.
+- Remote photos load from `rcmediaservices.net` (whitelisted in `next.config.mjs`). Inline `<img>` is fine for now — `next/image` is only used for the local acorn. Vendor/product images now come from Supabase Storage public URLs.
 - Anchor links (`/#about`) work across pages because the homepage owns those ids.
 - External applications/inquiries should open in a new tab (`target="_blank" rel="noopener noreferrer"`).
 - Mobile-first for event sections.
+- Dashboard sidebar uses `<div className="dash-nav">` — NOT `<nav>` — because the global CSS applies `position:fixed` to all `nav` elements, which would break the sidebar layout.
+- Image URL fields use `||` not `??` for fallbacks — empty string `""` saved from a cleared field should still fall through to the default image.
+- Supabase Storage paths are `{userId}/{timestamp}-{random}.{ext}` so RLS delete policy can match on `(storage.foldername(name))[1] = auth.uid()::text`.
 
 ## Active goals (from owner meeting)
 1. Clarify that Makers Mill is **multiple experiences**, not one venue — surface this on the homepage.

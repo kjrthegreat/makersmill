@@ -50,19 +50,88 @@ Arcade and Pool get buttons (possibly linking to schedule/calendar) but stay on 
 - **Green River Valley Farm** — feature on the Makers Mill site, link out to their order/pickup flow.
 - **I Love You a Brunch** — scope a separate build with menu display + online ordering.
 
-## Phase 7 — Vendor platform
-The `/vendors` page needs to grow from copy + apply form into a real directory — and eventually a storefront — for the makers inside the Mill.
-- Build a vendor directory page: every enrolled vendor listed on `/vendors` with a thumbnail and name. Placeholder names / blank entries are fine until real vendors are wired up.
-- Each vendor gets their own profile page that they can customize themselves (name, photos, story, contact, hours, etc.).
-- Auth: vendor login + signup, plus an admin page for Makers Mill staff to approve, manage, and remove vendor accounts.
-- Reserve a per-vendor mini-store slot in the profile layout from the start, even though the storefront ships later — placeholder for now.
+## Phase 7 — Vendor platform ✅ Core complete (2026-05-22)
+The `/vendors` page now pulls live data from Supabase and each vendor has a fully dynamic public page.
+
+### Auth & portal — done
+- `/vendor/login`, `/vendor/signup`, `/vendor/reset-password` — email+password auth via Supabase
+- Middleware protecting `/vendor/dashboard/*` and `/admin/*`
+- Vendor dashboard: profile editor, product manager, settings, preview link
+- Admin portal: applications queue, vendor management, product moderation, site settings
+
+### Vendor page customization — done (2026-05-22)
+New DB columns added to `vendors` table: `facebook`, `location_in_mill`, `hero_headline`, `hero_subline`, `about_headline`, `accent_color`, `cta_text`, `cta_url`, `gallery_urls` (text[]), `categories` (text[]), `meta_description`.
+
+Profile form expanded to 7 sections: Store Info, Categories (12 types), Contact & Links (incl. Facebook), Images (logo + banner + 6-slot gallery), Page Customization (hero headline, accent color picker, custom CTA), SEO (meta description), Hours.
+
+### File upload — done (2026-05-22)
+- Supabase Storage buckets created: `vendor-assets` and `product-images` (both public, 5 MB limit, images only)
+- `ImageUpload` component: drag-and-drop or click-to-upload, uploads to Storage, returns permanent public URL, URL paste fallback
+- Used in ProfileForm (logo, banner, 6 gallery slots), AdminVendorForm, and ProductForm (up to 5 product photos)
+
+### Admin full vendor edit — done (2026-05-22)
+- `/admin/vendors/[id]` — admin can edit every field of any vendor's profile (status, slug, sort order, featured toggle, all content + images + hours) plus see and moderate their products inline
+
+### Public vendor page — done (2026-05-22)
+- Renders all new customization fields: accent color, custom hero, categories, gallery, Facebook, CTA, location, SEO meta
+- **Section order: Hero → Shop → About → Gallery → slim footer nav** (shop first per Todd)
+- Removed boilerplate "Come Find" and "More to Discover" sections that were identical on every page
+
+### Vendor directory — done (2026-05-22)
+- Shows up to 2 category tags on each vendor card from DB
+- Categories fetched from `vendors.categories` array column
 
 ### Later
-- Enable product upload + sales for select vendors (gated by admin approval — not open to all).
-- Per-vendor storefronts / checkout, once payment infrastructure from Phase 5 is settled.
+- Enable product checkout via Stripe (Phase 5 dependency).
+- Per-vendor storefronts once payment infrastructure settled.
+- Drag-and-drop vendor reorder in admin directory controls.
+- "View as vendor" impersonation for admin support.
+
+## Phase 8 — Online vendor checkout (Stripe Connect)
+Vendors sell products directly through the site. Makers Mill takes a platform fee on each transaction automatically — no manual payouts.
+
+**Why Stripe Connect (not a single Stripe account):** Each vendor connects their own Stripe account. Money goes directly to them; Makers Mill's platform fee is split at the moment of payment. This avoids the mill holding vendor funds, eliminates complex manual payout tracking, and keeps vendor tax reporting their own responsibility.
+
+### What needs to be built
+
+**Vendor onboarding (Stripe side)**
+- Add `stripe_account_id` column to `vendors` table
+- "Connect Stripe" button in vendor dashboard → Stripe Connect OAuth flow → save `stripe_account_id` on return
+- Show connection status in dashboard (connected / not connected); products can't go to checkout until connected
+
+**Cart + checkout**
+- "Add to Cart" button on product cards (replaces "Inquire →" for vendors with Stripe connected)
+- Cart stored in localStorage or a lightweight server session
+- Checkout via a Next.js API route that creates a Stripe Payment Intent with `transfer_data` pointing to the vendor's connected account and `application_fee_amount` set to Makers Mill's cut
+- Stripe-hosted checkout page or embedded Stripe Elements form
+- Confirmation page + email receipt (Stripe handles receipt by default)
+
+**Order management**
+- New `orders` table: id, vendor_id, customer_email, stripe_payment_intent_id, total_cents, fee_cents, status, created_at
+- New `order_items` table: order_id, product_id, quantity, price_cents
+- Stripe webhook listener (`/api/webhooks/stripe`): handle `payment_intent.succeeded`, `payment_intent.payment_failed`, `charge.refunded`, `charge.dispute.created`
+- Orders view in vendor dashboard: list of orders, status, customer contact
+- Orders view in admin portal: all orders across all vendors, revenue totals
+
+**Platform fee**
+- Fee percentage configurable in admin site settings (start at 10% per the advertising model discussion)
+- Fee is set at checkout creation time — no manual intervention needed
+
+### Dependencies / blockers before building
+- Stripe account for Makers Mill (needs Todd to create/connect)
+- Decision on platform fee percentage (10% discussed)
+- Refund and dispute policy — who eats chargebacks? Document before launch
+- Legal clarity: vendors selling through the platform have tax implications; consult before opening to all vendors
+- Terms of service for vendors must be in place
+
+### Current stopgap
+Vendors with their own Shopify/Etsy/Square can use the `cta_url` field in their profile to link to their external store. This is already live — no build needed.
+
+### Rough scope
+3–4 weeks of focused build. The existing `products` table (prices in cents, vendor_id FK) is already structured correctly for Stripe — no schema changes needed beyond adding `stripe_account_id` to vendors and creating the orders tables.
 
 ## Advertising model (parallel track)
-Pitch participating vendors/businesses on 10% of sales generated through placements on the Makers Mill site. Needs a tracking mechanism before it can be sold.
+Pitch participating vendors/businesses on 10% of sales generated through placements on the Makers Mill site. Needs a tracking mechanism before it can be sold. Phase 8's platform fee mechanism handles the collection side once checkout is live.
 
 ---
 

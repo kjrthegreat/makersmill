@@ -52,8 +52,8 @@ const SHOWS: Show[] = [
     cta: { label: 'Tickets', href: '#' }
   },
   {
-    month: 'Feb',
-    day: '15',
+    month: 'Jun',
+    day: '14',
     dateBg: 'var(--rust)',
     monthColor: 'var(--cream-dk)',
     dayColor: 'var(--cream)',
@@ -67,8 +67,8 @@ const SHOWS: Show[] = [
     delay: '.08s'
   },
   {
-    month: 'Jan',
-    day: '25',
+    month: 'Jun',
+    day: '27',
     dateBg: 'var(--gold)',
     monthColor: 'var(--ink)',
     dayColor: 'var(--ink)',
@@ -82,8 +82,8 @@ const SHOWS: Show[] = [
     delay: '.04s'
   },
   {
-    month: 'Mar',
-    day: '01',
+    month: 'Jul',
+    day: '19',
     dateBg: 'var(--warm)',
     monthColor: 'var(--orange)',
     dayColor: 'var(--cream)',
@@ -99,9 +99,88 @@ const SHOWS: Show[] = [
   }
 ];
 
+const VENUE_LOCATION = {
+  '@type': 'Place',
+  name: 'The Makers Mill — The Stage',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '402 E. Mt. Vernon St.',
+    addressLocality: 'Somerset',
+    addressRegion: 'KY',
+    postalCode: '42501',
+    addressCountry: 'US',
+  },
+};
+
+const ORGANIZER = {
+  '@type': 'Organization',
+  name: 'The Makers Mill',
+  url: 'https://makersmillsomerset.com',
+};
+
+const eventJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MusicEvent',
+    name: 'Saturday Live Set at The Makers Mill',
+    description: 'Area musicians take the stage every Saturday. Doors get busy — come early.',
+    location: VENUE_LOCATION,
+    organizer: ORGANIZER,
+    eventSchedule: {
+      '@type': 'Schedule',
+      byDay: 'https://schema.org/Saturday',
+      startTime: '19:00',
+      repeatFrequency: 'P1W',
+    },
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    isAccessibleForFree: false,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MusicEvent',
+    name: 'Touring Artist Showcase',
+    description: 'A regional/touring performer on The Stage. Lineup confirmed closer to the date.',
+    startDate: '2026-06-14T20:00',
+    location: VENUE_LOCATION,
+    organizer: ORGANIZER,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    isAccessibleForFree: false,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: 'Open Mic Night at The Makers Mill',
+    description: 'Singers, poets, comedians. 5-minute sets. Sign up at the door.',
+    startDate: '2026-06-27T19:00',
+    location: VENUE_LOCATION,
+    organizer: ORGANIZER,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    isAccessibleForFree: true,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MusicEvent',
+    name: 'Singer-Songwriter Night',
+    description: 'A quieter night for original songs and storytelling. Listening-room vibe.',
+    startDate: '2026-07-19T19:30',
+    location: VENUE_LOCATION,
+    organizer: ORGANIZER,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    isAccessibleForFree: false,
+  },
+];
+
 export default function StagePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+      />
       <Nav />
 
       {/* ── HERO ── */}

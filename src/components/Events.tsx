@@ -49,8 +49,8 @@ const EVENTS: EventCard[] = [
     delay: '.08s'
   },
   {
-    month: 'Jan',
-    day: '25',
+    month: 'Jun',
+    day: '27',
     dateBg: 'var(--gold)',
     monthColor: 'var(--ink)',
     dayColor: 'var(--ink)',
@@ -64,8 +64,8 @@ const EVENTS: EventCard[] = [
     delay: '.04s'
   },
   {
-    month: 'Feb',
-    day: '08',
+    month: 'Jul',
+    day: '12',
     dateBg: 'var(--warm)',
     monthColor: 'var(--orange)',
     dayColor: 'var(--cream)',
