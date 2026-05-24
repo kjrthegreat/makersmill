@@ -43,6 +43,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin/products" className="dash-nav-item">
             <span className="dash-nav-icon">◈</span> All Products
           </Link>
+          <Link href="/admin/events" className="dash-nav-item">
+            <span className="dash-nav-icon">◷</span> Events
+          </Link>
           <Link href="/admin/settings" className="dash-nav-item">
             <span className="dash-nav-icon">⚙</span> Site Settings
           </Link>

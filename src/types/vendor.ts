@@ -87,6 +87,28 @@ export interface VendorApplication {
   rejection_reason: string | null;
 }
 
+export type EventStatus = 'published' | 'draft';
+export type EventAccentColor = 'orange' | 'rust' | 'gold' | 'warm' | 'wood' | 'dark';
+
+export interface Event {
+  id: string;
+  name: string;
+  type: string | null;
+  detail: string | null;
+  recurring: boolean;
+  recurring_day: string | null;
+  event_date: string | null;
+  time_label: string | null;
+  tag: string | null;
+  cta_label: string;
+  cta_url: string;
+  accent_color: EventAccentColor;
+  status: EventStatus;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export const PRODUCT_CATEGORIES = [
   'Art & Prints',
   'Ceramics & Pottery',

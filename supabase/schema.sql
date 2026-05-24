@@ -254,3 +254,42 @@ create trigger products_updated_at
 
 -- insert into storage.buckets (id, name, public) values ('vendor-assets', 'vendor-assets', true);
 -- insert into storage.buckets (id, name, public) values ('product-images', 'product-images', true);
+
+-- ============================================================
+-- Events (admin-managed, shown on homepage + /stage)
+-- ============================================================
+
+create table public.events (
+  id            uuid primary key default gen_random_uuid(),
+  name          text not null,
+  type          text,
+  detail        text,
+  recurring     boolean default false,
+  recurring_day text,        -- 'Mon'|'Tue'|'Wed'|'Thu'|'Fri'|'Sat'|'Sun'
+  event_date    date,        -- used when recurring = false
+  time_label    text,        -- e.g. "7:00 PM – 9:00 PM"
+  tag           text,        -- e.g. "Free Entry"
+  cta_label     text default 'Event Details',
+  cta_url       text default '#',
+  accent_color  text default 'orange'
+                  check (accent_color in ('orange','rust','gold','warm','wood','dark')),
+  status        text not null default 'published'
+                  check (status in ('published','draft')),
+  sort_order    integer default 0,
+  created_at    timestamptz default now(),
+  updated_at    timestamptz default now()
+);
+
+alter table public.events enable row level security;
+
+create policy "Public can view published events"
+  on public.events for select
+  using (status = 'published');
+
+create policy "Admins can manage all events"
+  on public.events for all
+  using (public.get_my_role() = 'admin');
+
+create trigger events_updated_at
+  before update on public.events
+  for each row execute procedure public.handle_updated_at();
