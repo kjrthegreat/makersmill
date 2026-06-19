@@ -1,5 +1,9 @@
 import { defineCloudflareConfig } from '@opennextjs/cloudflare';
 
-// OpenNext adapter config. Caching/queue overrides go here later if needed
-// (e.g. R2 incremental cache). Defaults are fine for the current site.
-export default defineCloudflareConfig();
+// OpenNext builds the Next.js app by running `buildCommand` (default: `npm run build`).
+// Our `npm run build` IS the OpenNext build, so the default would recurse infinitely.
+// Point the inner build straight at plain `next build` (exposed as `build:next`).
+export default {
+  ...defineCloudflareConfig(),
+  buildCommand: 'npm run build:next',
+};
