@@ -28,19 +28,19 @@ type Feature = {
 const FEATURES: Feature[] = [
   {
     n: '01',
-    icon: '🖨️',
+    icon: '◈',
     title: 'Screen Printing',
     desc: 'Original and custom screen-printed work, run out of their studio inside the Mill.'
   },
   {
     n: '02',
-    icon: '🎨',
+    icon: '✶',
     title: 'Original Graphics',
     desc: "Prints, posters, and original designs — stop in to see what's coming off the press."
   },
   {
     n: '03',
-    icon: '✉️',
+    icon: '◆',
     title: 'Custom Orders',
     desc: 'Need something printed? Get in touch. They work with local businesses and individuals.'
   }

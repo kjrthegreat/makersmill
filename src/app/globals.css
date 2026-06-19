@@ -351,7 +351,9 @@ nav.scrolled .nav-logo,nav.scrolled .nav-links{
 .exp-acc-head{display:flex;align-items:center;gap:16px;width:100%;padding:18px 6px;background:none;border:none;cursor:pointer;color:var(--cream);text-align:left;transition:background .2s}
 .exp-acc-head:hover{background:rgba(240,232,214,.03)}
 .exp-acc-n{font-family:var(--stamp);font-size:9px;letter-spacing:.15em;color:var(--orange);min-width:24px}
-.exp-acc-icon{font-size:22px;min-width:30px;text-align:center}
+.exp-acc-icon{font-size:15px;min-width:30px;text-align:center;color:var(--orange)}
+/* refined inline glyph marks (replaces emoji) */
+.gly{color:var(--orange);font-style:normal;line-height:1}
 .exp-acc-title{font-family:var(--cond);font-size:17px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;flex:1;transition:color .2s}
 .exp-acc-item.open .exp-acc-title,.exp-acc-head:hover .exp-acc-title{color:var(--orange)}
 .exp-acc-chevron{font-size:20px;color:var(--orange);line-height:1;min-width:20px;text-align:center;transition:transform .38s cubic-bezier(0.4,0,0.2,1),opacity .2s}
@@ -572,7 +574,7 @@ footer{position:relative;background:var(--ink);border-top:1px solid var(--border
 .feat-card:hover{transform:translateY(-4px);border-color:var(--ob);box-shadow:0 12px 30px rgba(0,0,0,.42)}
 .feat-card:hover::before{opacity:1}
 .feat-n{position:absolute;top:14px;right:18px;font-family:var(--stamp);font-size:9px;color:rgba(255,255,255,.1);letter-spacing:.08em}
-.feat-icon{font-size:28px;margin-bottom:14px}
+.feat-icon{font-size:20px;margin-bottom:14px;color:var(--orange)}
 .feat-title{font-family:var(--cond);font-size:18px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--cream);margin-bottom:8px}
 .feat-desc{font-size:13px;color:var(--cream-dk);line-height:1.7;font-weight:300}
 

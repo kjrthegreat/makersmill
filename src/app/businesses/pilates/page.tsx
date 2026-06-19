@@ -28,19 +28,19 @@ type Feature = {
 const FEATURES: Feature[] = [
   {
     n: '01',
-    icon: '🧘',
+    icon: '✦',
     title: 'Mat Classes',
     desc: 'Group mat pilates in a beautifully restored space — accessible for all levels.'
   },
   {
     n: '02',
-    icon: '⚙️',
+    icon: '◈',
     title: 'Equipment Sessions',
     desc: 'Work with reformers and equipment in small groups or private sessions.'
   },
   {
     n: '03',
-    icon: '📅',
+    icon: '✶',
     title: 'Flexible Schedule',
     desc: 'Morning and evening classes throughout the week — get in touch for current availability.'
   }

@@ -29,19 +29,19 @@ type Feature = {
 const FEATURES: Feature[] = [
   {
     n: '01',
-    icon: '🎉',
+    icon: '✦',
     title: 'Events & Gatherings',
     desc: 'Soul House hosts its own events inside the Mill — community nights, pop-ups, and gatherings with a distinct energy.'
   },
   {
     n: '02',
-    icon: '🎨',
+    icon: '✶',
     title: 'Creative Space',
     desc: 'A room dedicated to creative community — workshops, showcases, and experiences that don\'t fit the usual mold.'
   },
   {
     n: '03',
-    icon: '🤝',
+    icon: '❖',
     title: 'Part of Something Bigger',
     desc: 'Sharing the building with the Stage, the bar, and the makers — connected to everything that makes the Mill a destination.'
   }

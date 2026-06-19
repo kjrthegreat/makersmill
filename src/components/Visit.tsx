@@ -20,8 +20,8 @@ export function Visit() {
             </div>
           </div>
           <div className="visit-contact">
-            <a href="tel:6066879033">📞 (606) 687-9033</a>
-            <a href="mailto:makersmillsomerset@gmail.com">✉ makersmillsomerset@gmail.com</a>
+            <a href="tel:6066879033"><span className="gly">☎︎</span> (606) 687-9033</a>
+            <a href="mailto:makersmillsomerset@gmail.com"><span className="gly">✉︎</span> makersmillsomerset@gmail.com</a>
           </div>
           <div className="hours-title">✦ Hours</div>
           <div className="hours-row">

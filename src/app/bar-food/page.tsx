@@ -27,19 +27,19 @@ type Feature = {
 const FEATURES: Feature[] = [
   {
     n: '01',
-    icon: '🥃',
+    icon: '◆',
     title: 'Drinks',
     desc: 'Craft brews, cocktails, and easygoing pours — the bar runs the room.'
   },
   {
     n: '02',
-    icon: '🥪',
+    icon: '❖',
     title: 'Bites',
     desc: 'Gourmet sandwiches made fresh in the back. Worth staying for.'
   },
   {
     n: '03',
-    icon: '🎶',
+    icon: '✶',
     title: 'Event Night Energy',
     desc: 'On show nights the room fills up — a good seat, a good drink, a great set.'
   }

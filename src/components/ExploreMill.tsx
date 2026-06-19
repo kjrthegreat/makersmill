@@ -100,16 +100,16 @@ export function ExploreMill() {
           <div className="explore-extras-label">Also inside the Mill</div>
           <div className="explore-extras-row">
             <Link href="/#experiences" className="explore-extra-pill">
-              🎱 Pool
+              <span className="gly">⬥</span> Pool
             </Link>
             <Link href="/#experiences" className="explore-extra-pill">
-              🕹️ Arcade
+              <span className="gly">◈</span> Arcade
             </Link>
             <Link href="/#experiences" className="explore-extra-pill">
-              🎤 Open Mic
+              <span className="gly">✷</span> Open Mic
             </Link>
             <Link href="/#experiences" className="explore-extra-pill">
-              🧠 Trivia Nights
+              <span className="gly">❂</span> Trivia Nights
             </Link>
           </div>
         </div>
