@@ -22,14 +22,19 @@ import { Businesses } from '@/components/Businesses';
 import { RegionFeature } from '@/components/RegionFeature';
 import { Visit } from '@/components/Visit';
 import { Footer } from '@/components/Footer';
+import { getEvents } from '@/lib/db';
 
-export default function HomePage() {
+// Reads editable events from D1 at request time — must render dynamically.
+export const dynamic = 'force-dynamic';
+
+export default async function HomePage() {
+  const events = await getEvents();
   return (
     <>
       <Nav />
       <Hero />
       <About />
-      <Events />
+      <Events events={events} />
       <ExploreMill />
       <Experiences />
       <Businesses />

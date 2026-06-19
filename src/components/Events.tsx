@@ -3,10 +3,11 @@
 import { useMemo, useState } from 'react';
 import { TICKETS_URL } from '@/lib/site';
 
-// ─── Event data ────────────────────────────────────────────────────────────────
-// Single source of truth for the calendar. Edit/add events here — no backend.
-//   • One-off event  → set `date: 'YYYY-MM-DD'`
-//   • Weekly regular → set `weekday: 0–6` (0 = Sunday … 6 = Saturday)
+// ─── Event calendar ──────────────────────────────────────────────────────────
+// Events come from D1 (src/lib/db.ts → getEvents) and are passed in via the
+// `events` prop by the homepage server component.
+//   • One-off event  → has `date: 'YYYY-MM-DD'`
+//   • Weekly regular → has `weekday: 0–6` (0 = Sunday … 6 = Saturday)
 type Accent = 'orange' | 'rust' | 'gold';
 
 type CalEvent = {
@@ -20,16 +21,6 @@ type CalEvent = {
   ctaLabel?: string;
   ctaUrl?: string;
 };
-
-const EVENTS: CalEvent[] = [
-  { title: 'Saturday Live Sessions', type: 'Live Music', time: '8:00 PM', tag: 'Weekly', accent: 'orange', weekday: 6, ctaLabel: 'Get Tickets', ctaUrl: TICKETS_URL },
-  { title: 'Trivia Night',           type: 'Game Night', time: '7:00 PM', tag: 'Free',   accent: 'gold',   weekday: 3 },
-  { title: 'Open Mic',               type: 'Live Music', time: '7:30 PM', tag: 'Free',   accent: 'orange', weekday: 2 },
-  { title: 'The Ridgeline Band',     type: 'Live Music', time: '8:30 PM', tag: 'Ticketed', accent: 'orange', date: '2026-06-27', ctaLabel: 'Get Tickets', ctaUrl: TICKETS_URL },
-  { title: 'Makers Market',          type: 'Market',     time: '11:00 AM', tag: 'All Ages', accent: 'gold', date: '2026-07-04' },
-  { title: 'Summer Songwriter Night', type: 'Live Music', time: '8:00 PM', tag: 'Ticketed', accent: 'orange', date: '2026-07-11', ctaLabel: 'Get Tickets', ctaUrl: TICKETS_URL },
-  { title: 'Vinyl & Vintage Pop-Up', type: 'Pop-Up',     time: '12:00 PM', tag: 'Free',   accent: 'rust',   date: '2026-07-18' },
-];
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -51,24 +42,24 @@ function eventOnDate(e: CalEvent, d: Date): boolean {
   return false;
 }
 
-function eventsOnDate(d: Date): CalEvent[] {
-  return EVENTS.filter((e) => eventOnDate(e, d));
+function eventsOnDate(events: CalEvent[], d: Date): CalEvent[] {
+  return events.filter((e) => eventOnDate(e, d));
 }
 
-// Flatten EVENTS into concrete dated occurrences within the next `days` days.
-function upcomingOccurrences(days = 90) {
+// Flatten events into concrete dated occurrences within the next `days` days.
+function upcomingOccurrences(events: CalEvent[], days = 90) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const out: { date: Date; event: CalEvent }[] = [];
   for (let i = 0; i < days; i++) {
     const d = new Date(today);
     d.setDate(today.getDate() + i);
-    for (const e of EVENTS) if (eventOnDate(e, d)) out.push({ date: d, event: e });
+    for (const e of events) if (eventOnDate(e, d)) out.push({ date: d, event: e });
   }
   return out;
 }
 
-export function Events() {
+export function Events({ events }: { events: CalEvent[] }) {
   const today = useMemo(() => {
     const t = new Date();
     t.setHours(0, 0, 0, 0);
@@ -93,16 +84,16 @@ export function Events() {
     return list;
   }, [view]);
 
-  const upcoming = useMemo(() => upcomingOccurrences(), []);
+  const upcoming = useMemo(() => upcomingOccurrences(events), [events]);
 
   // Right-hand panel: a selected day's events, or the next handful of upcoming ones
   const panel = useMemo(() => {
     if (selected) {
       const d = new Date(selected + 'T00:00:00');
-      return eventsOnDate(d).map((event) => ({ date: d, event }));
+      return eventsOnDate(events, d).map((event) => ({ date: d, event }));
     }
     return upcoming.slice(0, 6);
-  }, [selected, upcoming]);
+  }, [selected, upcoming, events]);
 
   function shiftMonth(delta: number) {
     setSelected(null);
@@ -114,7 +105,7 @@ export function Events() {
 
   function goToToday() {
     setView({ year: today.getFullYear(), month: today.getMonth() });
-    setSelected(eventsOnDate(today).length ? dayKey(today) : null);
+    setSelected(eventsOnDate(events, today).length ? dayKey(today) : null);
   }
 
   return (
@@ -162,7 +153,7 @@ export function Events() {
               {cells.map((d, i) => {
                 if (!d) return <div key={`x${i}`} className="cal-cell cal-cell--empty" />;
                 const key = dayKey(d);
-                const dayEvents = eventsOnDate(d);
+                const dayEvents = eventsOnDate(events, d);
                 const isToday = key === dayKey(today);
                 const isSel = key === selected;
                 return (

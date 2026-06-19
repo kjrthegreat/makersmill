@@ -4,6 +4,10 @@ import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
 import { PerformerInquiryButton } from '@/components/PerformerInquiryButton';
 import { TICKETS_URL } from '@/lib/site';
+import { getStageShows, type StageShow } from '@/lib/db';
+
+// Reads editable stage shows from D1 at request time — must render dynamically.
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'The Stage — Live Music in Somerset, KY',
@@ -34,68 +38,41 @@ type Show = {
   delay?: string;
 };
 
-function getShows(ticketsHref: string): Show[] { return [
-  {
-    month: 'Every',
-    day: 'Sat',
-    dateBg: 'var(--orange)',
-    monthColor: 'var(--ink)',
-    dayColor: 'var(--ink)',
-    type: 'Weekly · Live Set',
-    name: 'Saturday Live Set',
-    detail: 'Area musicians take the stage every Saturday. Doors get busy — come early.',
-    time: '7:00 PM',
-    tag: 'All Ages',
-    // TODO: real ticket URL
-    cta: { label: 'Tickets', href: ticketsHref }
-  },
-  {
-    month: 'Jun',
-    day: '14',
-    dateBg: 'var(--rust)',
-    monthColor: 'var(--cream-dk)',
-    dayColor: 'var(--cream)',
-    type: 'Touring Act',
-    name: 'Touring Artist Showcase',
-    detail: 'A regional/touring performer on The Stage. Lineup confirmed closer to the date.',
-    time: '8:00 PM',
-    tag: 'Ticketed',
-    // TODO: real ticket URL
-    cta: { label: 'Tickets', href: ticketsHref },
-    delay: '.08s'
-  },
-  {
-    month: 'Jun',
-    day: '27',
-    dateBg: 'var(--gold)',
-    monthColor: 'var(--ink)',
-    dayColor: 'var(--ink)',
-    type: 'Open Stage',
-    name: 'Open Mic Night',
-    detail: 'Singers, poets, comedians. 5-minute sets. Sign up at the door.',
-    time: 'Sign-ups 6PM · Start 7PM',
-    tag: 'Open to All',
-    // TODO: real event-details URL
-    cta: { label: 'Event Details', href: '#' },
-    delay: '.04s'
-  },
-  {
-    month: 'Jul',
-    day: '19',
+// accent (stored in D1) → the date-badge styling the Show card expects.
+const STAGE_ACCENT: Record<
+  string,
+  { dateBg: string; monthColor: string; dayColor: string; dateExtra?: React.CSSProperties }
+> = {
+  orange: { dateBg: 'var(--orange)', monthColor: 'var(--ink)', dayColor: 'var(--ink)' },
+  rust: { dateBg: 'var(--rust)', monthColor: 'var(--cream-dk)', dayColor: 'var(--cream)' },
+  gold: { dateBg: 'var(--gold)', monthColor: 'var(--ink)', dayColor: 'var(--ink)' },
+  warm: {
     dateBg: 'var(--warm)',
     monthColor: 'var(--orange)',
     dayColor: 'var(--cream)',
-    dateExtra: { border: '1px solid var(--ob)' },
-    type: 'Songwriter Round',
-    name: "Singer-Songwriter Night",
-    detail: 'A quieter night for original songs and storytelling. Listening-room vibe.',
-    time: '7:30 PM',
-    tag: 'Ticketed',
-    // TODO: real ticket URL
-    cta: { label: 'Tickets', href: ticketsHref },
-    delay: '.12s'
+    dateExtra: { border: '1px solid var(--ob)' }
   }
-]; }
+};
+
+// Map a lean D1 stage_show to the presentational Show shape the card renders.
+function toShow(s: StageShow, i: number): Show {
+  const a = STAGE_ACCENT[s.accent] ?? STAGE_ACCENT.orange;
+  return {
+    month: s.month,
+    day: s.day,
+    dateBg: a.dateBg,
+    monthColor: a.monthColor,
+    dayColor: a.dayColor,
+    dateExtra: a.dateExtra,
+    type: s.type,
+    name: s.name,
+    detail: s.detail,
+    time: s.time,
+    tag: s.tag,
+    cta: { label: s.ctaLabel, href: s.ctaUrl },
+    delay: i > 0 ? `${(i * 0.04).toFixed(2)}s` : undefined
+  };
+}
 
 const VENUE_LOCATION = {
   '@type': 'Place',
@@ -172,8 +149,8 @@ const eventJsonLd = [
   },
 ];
 
-export default function StagePage() {
-  const SHOWS = getShows(TICKETS_URL);
+export default async function StagePage() {
+  const SHOWS = (await getStageShows()).map(toShow);
   return (
     <>
       <script

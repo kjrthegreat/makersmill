@@ -10,8 +10,14 @@
   },
   "observability": {
     "enabled": true
-  }
-  // Bindings added in later phases:
-  //   "d1_databases": [{ "binding": "DB", "database_name": "makersmill", "database_id": "..." }]
-  //   "r2_buckets":   [{ "binding": "MEDIA", "bucket_name": "makersmill-media" }]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "makersmill",
+      "database_id": "48ffd36b-428e-489c-8d13-713ce9ddc33a"
+    }
+  ]
+  // R2 binding added in a later phase:
+  //   "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "makersmill-media" }]
 }

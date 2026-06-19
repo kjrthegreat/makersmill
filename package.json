@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "opennextjs-cloudflare build",
-    "build:next": "next build",
+    "build:next": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts && next build",
     "start": "next start",
     "lint": "next lint",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
