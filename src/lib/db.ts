@@ -112,3 +112,111 @@ export async function getStageShows(): Promise<StageShow[]> {
     ctaUrl: resolveCtaUrl(r.cta_url ?? '', '#'),
   }));
 }
+
+// ─── Admin CRUD ──────────────────────────────────────────────────────────────
+// Raw rows (incl. id) for the admin editor. Server-only, used by server actions.
+
+export type EventRow = {
+  id: number;
+  title: string;
+  type: string;
+  time: string | null;
+  tag: string | null;
+  accent: string;
+  date: string | null;
+  weekday: number | null;
+  cta_label: string | null;
+  cta_url: string | null;
+  sort_order: number;
+};
+export type EventInput = Omit<EventRow, 'id'>;
+
+const EVENT_COLS = 'id, title, type, time, tag, accent, date, weekday, cta_label, cta_url, sort_order';
+
+export async function listEventRows(): Promise<EventRow[]> {
+  const { results } = await db()
+    .prepare(`SELECT ${EVENT_COLS} FROM events ORDER BY sort_order, id`)
+    .all<EventRow>();
+  return results;
+}
+
+export async function getEventRow(id: number): Promise<EventRow | null> {
+  return db().prepare(`SELECT ${EVENT_COLS} FROM events WHERE id = ?`).bind(id).first<EventRow>();
+}
+
+export async function createEvent(e: EventInput): Promise<void> {
+  await db()
+    .prepare(
+      `INSERT INTO events (title, type, time, tag, accent, date, weekday, cta_label, cta_url, sort_order)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    )
+    .bind(e.title, e.type, e.time, e.tag, e.accent, e.date, e.weekday, e.cta_label, e.cta_url, e.sort_order)
+    .run();
+}
+
+export async function updateEvent(id: number, e: EventInput): Promise<void> {
+  await db()
+    .prepare(
+      `UPDATE events SET title=?, type=?, time=?, tag=?, accent=?, date=?, weekday=?, cta_label=?, cta_url=?, sort_order=?
+       WHERE id=?`
+    )
+    .bind(e.title, e.type, e.time, e.tag, e.accent, e.date, e.weekday, e.cta_label, e.cta_url, e.sort_order, id)
+    .run();
+}
+
+export async function deleteEvent(id: number): Promise<void> {
+  await db().prepare('DELETE FROM events WHERE id = ?').bind(id).run();
+}
+
+export type StageRow = {
+  id: number;
+  month: string;
+  day: string;
+  accent: string;
+  type: string;
+  name: string;
+  detail: string;
+  time: string;
+  tag: string;
+  cta_label: string;
+  cta_url: string | null;
+  sort_order: number;
+};
+export type StageInput = Omit<StageRow, 'id'>;
+
+const STAGE_COLS = 'id, month, day, accent, type, name, detail, time, tag, cta_label, cta_url, sort_order';
+
+export async function listStageRows(): Promise<StageRow[]> {
+  const { results } = await db()
+    .prepare(`SELECT ${STAGE_COLS} FROM stage_shows ORDER BY sort_order, id`)
+    .all<StageRow>();
+  return results;
+}
+
+export async function getStageRow(id: number): Promise<StageRow | null> {
+  return db().prepare(`SELECT ${STAGE_COLS} FROM stage_shows WHERE id = ?`).bind(id).first<StageRow>();
+}
+
+export async function createStageShow(s: StageInput): Promise<void> {
+  await db()
+    .prepare(
+      `INSERT INTO stage_shows (month, day, accent, type, name, detail, time, tag, cta_label, cta_url, sort_order)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    )
+    .bind(s.month, s.day, s.accent, s.type, s.name, s.detail, s.time, s.tag, s.cta_label, s.cta_url, s.sort_order)
+    .run();
+}
+
+export async function updateStageShow(id: number, s: StageInput): Promise<void> {
+  await db()
+    .prepare(
+      `UPDATE stage_shows SET month=?, day=?, accent=?, type=?, name=?, detail=?, time=?, tag=?, cta_label=?, cta_url=?, sort_order=?
+       WHERE id=?`
+    )
+    .bind(s.month, s.day, s.accent, s.type, s.name, s.detail, s.time, s.tag, s.cta_label, s.cta_url, s.sort_order, id)
+    .run();
+}
+
+export async function deleteStageShow(id: number): Promise<void> {
+  await db().prepare('DELETE FROM stage_shows WHERE id = ?').bind(id).run();
+}

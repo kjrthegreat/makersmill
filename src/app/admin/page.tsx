@@ -25,8 +25,7 @@ export default async function AdminHome() {
       </div>
 
       <p className="admin-note">
-        Editing tools (add / edit / delete) arrive next. For now these screens show what&apos;s
-        live in the database.
+        Add, edit, or remove items in each section — changes go live on the site immediately.
       </p>
     </div>
   );

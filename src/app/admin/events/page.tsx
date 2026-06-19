@@ -1,12 +1,14 @@
 import Link from 'next/link';
-import { getEvents } from '@/lib/db';
+import { listEventRows } from '@/lib/db';
+import { DeleteButton } from '../DeleteButton';
+import { deleteEventAction } from './actions';
 
 export const dynamic = 'force-dynamic';
 
 const DOW = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export default async function AdminEvents() {
-  const events = await getEvents();
+  const events = await listEventRows();
 
   return (
     <div className="admin-page">
@@ -16,43 +18,48 @@ export default async function AdminEvents() {
           <h1 className="admin-h">Events</h1>
           <p className="admin-sub">Homepage calendar — {events.length} entries.</p>
         </div>
-        <button type="button" className="admin-btn" disabled title="Coming in the next phase">
-          + Add event
-        </button>
+        <Link href="/admin/events/new" className="admin-btn">+ Add event</Link>
       </div>
 
-      <table className="admin-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Type</th>
-            <th>When</th>
-            <th>Tag</th>
-            <th>Accent</th>
-            <th>CTA</th>
-          </tr>
-        </thead>
-        <tbody>
-          {events.map((e, i) => (
-            <tr key={i}>
-              <td className="admin-td-strong">{e.title}</td>
-              <td>{e.type}</td>
-              <td>
-                {e.weekday !== undefined
-                  ? `Weekly · ${DOW[e.weekday]}`
-                  : e.date ?? '—'}
-                {e.time ? ` · ${e.time}` : ''}
-              </td>
-              <td>{e.tag ?? '—'}</td>
-              <td>
-                <span className={`admin-dot admin-dot--${e.accent ?? 'orange'}`} />
-                {e.accent ?? 'orange'}
-              </td>
-              <td>{e.ctaLabel ?? 'Details'}</td>
+      {events.length === 0 ? (
+        <p className="admin-empty">No events yet. Add your first one.</p>
+      ) : (
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Type</th>
+              <th>When</th>
+              <th>Tag</th>
+              <th>Accent</th>
+              <th className="admin-th-actions">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {events.map((e) => (
+              <tr key={e.id}>
+                <td className="admin-td-strong">{e.title}</td>
+                <td>{e.type}</td>
+                <td>
+                  {e.weekday != null ? `Weekly · ${DOW[e.weekday]}` : e.date ?? '—'}
+                  {e.time ? ` · ${e.time}` : ''}
+                </td>
+                <td>{e.tag ?? '—'}</td>
+                <td>
+                  <span className={`admin-dot admin-dot--${e.accent}`} />
+                  {e.accent}
+                </td>
+                <td>
+                  <div className="admin-row-actions">
+                    <Link href={`/admin/events/${e.id}`} className="admin-link-edit">Edit</Link>
+                    <DeleteButton action={deleteEventAction.bind(null, e.id)} what={e.title} />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
