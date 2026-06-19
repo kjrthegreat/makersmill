@@ -24,11 +24,11 @@ type CalEvent = {
 const EVENTS: CalEvent[] = [
   { title: 'Saturday Live Sessions', type: 'Live Music', time: '8:00 PM', tag: 'Weekly', accent: 'orange', weekday: 6, ctaLabel: 'Get Tickets', ctaUrl: TICKETS_URL },
   { title: 'Trivia Night',           type: 'Game Night', time: '7:00 PM', tag: 'Free',   accent: 'gold',   weekday: 3 },
-  { title: 'Open Mic',               type: 'Live Music', time: '7:30 PM', tag: 'Free',   accent: 'rust',   weekday: 2 },
+  { title: 'Open Mic',               type: 'Live Music', time: '7:30 PM', tag: 'Free',   accent: 'orange', weekday: 2 },
   { title: 'The Ridgeline Band',     type: 'Live Music', time: '8:30 PM', tag: 'Ticketed', accent: 'orange', date: '2026-06-27', ctaLabel: 'Get Tickets', ctaUrl: TICKETS_URL },
   { title: 'Makers Market',          type: 'Market',     time: '11:00 AM', tag: 'All Ages', accent: 'gold', date: '2026-07-04' },
-  { title: 'Summer Songwriter Night', type: 'Live Music', time: '8:00 PM', tag: 'Ticketed', accent: 'rust', date: '2026-07-11', ctaLabel: 'Get Tickets', ctaUrl: TICKETS_URL },
-  { title: 'Vinyl & Vintage Pop-Up', type: 'Pop-Up',     time: '12:00 PM', tag: 'Free',   accent: 'orange', date: '2026-07-18' },
+  { title: 'Summer Songwriter Night', type: 'Live Music', time: '8:00 PM', tag: 'Ticketed', accent: 'orange', date: '2026-07-11', ctaLabel: 'Get Tickets', ctaUrl: TICKETS_URL },
+  { title: 'Vinyl & Vintage Pop-Up', type: 'Pop-Up',     time: '12:00 PM', tag: 'Free',   accent: 'rust',   date: '2026-07-18' },
 ];
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -245,7 +245,7 @@ export function Events() {
                       {e.time && <div className="ev-time">{e.time}</div>}
                       <div className="ev-actions">
                         {e.tag && <span className="ev-tag">{e.tag}</span>}
-                        <a href={e.ctaUrl || TICKETS_URL} className="ev-cta">
+                        <a href={e.ctaUrl || '/#experiences'} className="ev-cta">
                           {e.ctaLabel || 'Details'} →
                         </a>
                       </div>
