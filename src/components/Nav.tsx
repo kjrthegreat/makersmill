@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { TICKETS_URL } from '@/lib/site';
 
 type NavItem = { href: string; label: string; sectionId?: string };
 
@@ -16,10 +17,7 @@ const NAV_LINKS: NavItem[] = [
   { href: 'mailto:makersmillsomerset@gmail.com', label: 'Contact' }
 ];
 
-// TODO: replace '#' with the real ticketing URL when available
-const TICKETS_HREF = '#';
-
-export function Nav() {
+export function Nav({ ticketsHref = TICKETS_URL }: { ticketsHref?: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobOpen, setMobOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
@@ -61,7 +59,8 @@ export function Nav() {
             {l.label}
           </Link>
         ))}
-        <Link href={TICKETS_HREF} onClick={closeMob} className="mob-cta">
+        <div className="mob-menu-divider" aria-hidden="true" />
+        <Link href={ticketsHref} onClick={closeMob} className="mob-cta">
           Tickets
         </Link>
       </div>
@@ -72,8 +71,8 @@ export function Nav() {
             className="nav-acorn"
             src="/acorn.png"
             alt="Makers Mill acorn logo"
-            width={38}
-            height={38}
+            width={36}
+            height={36}
             priority
           />
           <div className="nav-brand-wrap">
@@ -94,14 +93,14 @@ export function Nav() {
             );
           })}
           <li>
-            <Link href={TICKETS_HREF} className="nav-cta">
+            <Link href={ticketsHref} className="nav-cta">
               Tickets
             </Link>
           </li>
         </ul>
         <button
           type="button"
-          className="hamburger"
+          className={`hamburger${mobOpen ? ' open' : ''}`}
           onClick={() => setMobOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={mobOpen}

@@ -2,11 +2,21 @@
 
 Somerset, KY venue/marketplace site. Original build was a single `index.html`; migrated to a Next.js app on 2026-05-17 to make multi-page expansion (Stage, Bar, Store sub-pages) straightforward.
 
+## Current state — frontend-only rebuild (2026-06-19)
+The Supabase backend (auth, DB, Storage, vendor portal, admin panel, reservations, live events) was **stripped out on 2026-06-19** to restart that work from a clean frontend baseline. The site is now a **static, no-backend marketing site**. The removed backend still lives in git history (commits `1c4e978`, `85d09c4`) if it needs referencing during the rebuild.
+
+What this means today:
+- No auth, database, server actions, middleware, or `/admin` / `/vendor` routes.
+- **Events** is a self-contained **static calendar** (`src/components/Events.tsx`) — month grid showing event titles per date, a "today" indicator, and an upcoming-events side list. Event data is the `EVENTS` array at the top of the file.
+- **Vendor directory** (`/vendors`) is an **"under construction"** page; the dynamic per-vendor pages were removed. Static vendor data is parked in `src/lib/vendors.ts` for the eventual rebuild.
+- The ticketing link is a static constant — `TICKETS_URL` in `src/lib/site.ts` (placeholder `'#'`).
+- Homepage section order matches the nav order: Hero → About → Events → ExploreMill → Experiences → Businesses → Gallery → Region → Visit.
+
 ## Stack
 - **Next.js 15** (App Router) + **React 19** + **TypeScript**
 - Plain global CSS — no Tailwind. All styles live in `src/app/globals.css` and preserve the original hand-crafted design system.
-- **Supabase** — auth (email+password), Postgres DB, Storage (vendor-assets + product-images buckets). Added 2026-05-17.
-- Repo: `zak1269/makersmill`.
+- ~~Supabase~~ — **removed 2026-06-19** (see Current state). No backend services; nothing to configure to run the site.
+- Repo: `kjrthegreat/makersmill`.
 
 ## Setup
 ```bash
@@ -20,70 +30,32 @@ npm start
 ```
 src/
 ├── app/
-│   ├── layout.tsx                        — root layout, font preconnect, RevealObserver mount
-│   ├── globals.css                       — full design system + all section + dashboard styles
-│   ├── page.tsx                          — homepage composition
-│   ├── stage/page.tsx                    — The Stage sub-page
-│   ├── bar-food/page.tsx                 — Bar & Food sub-page
-│   ├── vendors/
-│   │   ├── page.tsx                      — public vendor directory (live from Supabase)
-│   │   └── [slug]/page.tsx               — individual vendor page (dynamic SSR)
-│   │                                       order: Hero → Shop → About → Gallery → slim footer nav
+│   ├── layout.tsx              — root layout, font preconnect, JSON-LD, RevealObserver mount
+│   ├── globals.css             — full design system + all section styles (incl. events calendar)
+│   ├── page.tsx                — homepage composition (nav-ordered sections)
+│   ├── stage/page.tsx          — The Stage sub-page
+│   ├── bar-food/page.tsx       — Bar & Food sub-page
+│   ├── vendors/page.tsx        — "under construction" placeholder (directory shelved)
 │   ├── businesses/
 │   │   ├── print-ghost/page.tsx
 │   │   ├── pilates/page.tsx
 │   │   └── soul-house/page.tsx
-│   ├── vendor/
-│   │   ├── login/page.tsx                — vendor auth
-│   │   ├── signup/page.tsx
-│   │   ├── reset-password/page.tsx
-│   │   └── dashboard/
-│   │       ├── layout.tsx                — sidebar layout (div.dash-nav, not nav — avoids global nav CSS)
-│   │       ├── page.tsx                  — dashboard home (stat cards)
-│   │       ├── profile/page.tsx          — profile editor (7 sections)
-│   │       ├── products/
-│   │       │   ├── page.tsx              — product list
-│   │       │   ├── new/page.tsx          — add product
-│   │       │   └── [id]/page.tsx         — edit product
-│   │       └── settings/page.tsx
-│   ├── admin/
-│   │   ├── layout.tsx                    — admin sidebar (div.dash-nav, checks admin role)
-│   │   ├── page.tsx                      — admin dashboard
-│   │   ├── applications/page.tsx         — vendor application queue
-│   │   ├── vendors/
-│   │   │   ├── page.tsx                  — all vendors list
-│   │   │   └── [id]/page.tsx             — edit any vendor (full profile + products inline)
-│   │   ├── products/page.tsx             — all products across all vendors
-│   │   └── settings/page.tsx
-│   ├── api/auth/callback/route.ts        — Supabase auth code exchange → redirect to dashboard
-│   ├── robots.ts                         — robots.txt generation
-│   └── sitemap.ts                        — sitemap generation
+│   ├── robots.ts               — robots.txt generation
+│   └── sitemap.ts              — sitemap (static routes only)
 ├── components/
-│   ├── Nav.tsx                           — client; scroll state, mobile menu
-│   ├── RevealObserver.tsx                — client; IntersectionObserver for .rev/.rev-l/.rev-r
+│   ├── Nav.tsx                 — client; scroll state, mobile menu, tickets link
 │   ├── Footer.tsx
-│   ├── Hero.tsx, About.tsx, Experiences.tsx, Events.tsx,
-│   ├── Gallery.tsx, Community.tsx, Visit.tsx, Contact.tsx
-│   ├── ProfileForm.tsx                   — client; 7-section vendor profile editor with ImageUpload
-│   ├── AdminVendorForm.tsx               — client; admin edit of any vendor (all fields + admin controls)
-│   ├── ProductForm.tsx                   — client; add/edit product with ImageUpload
-│   ├── ImageUpload.tsx                   — client; drag-and-drop or click → Supabase Storage; URL fallback
-│   ├── ProductActions.tsx                — client; publish/unpublish/delete product
-│   ├── AdminProductActions.tsx           — client; admin product moderation
-│   ├── VendorAdminActions.tsx            — client; activate/suspend/feature/delete + Edit link
-│   ├── ApplicationActions.tsx            — client; approve/reject vendor applications
-│   ├── DashLogout.tsx                    — client; sign out + redirect to /vendor/login
-│   └── ApplyButton.tsx                   — client; opens vendor application modal
-├── lib/supabase/
-│   ├── client.ts                         — browser Supabase client (createBrowserClient)
-│   └── server.ts                         — server Supabase client (cookie-based, App Router)
-├── types/
-│   └── vendor.ts                         — TypeScript interfaces for all DB entities + PRODUCT_CATEGORIES
-└── middleware.ts                         — protects /vendor/dashboard/* and /admin/*
+│   ├── RevealObserver.tsx      — client; IntersectionObserver for .rev/.rev-l/.rev-r
+│   ├── Hero.tsx, About.tsx, ExploreMill.tsx, Events.tsx (calendar, client),
+│   │   Experiences.tsx, Businesses.tsx, Gallery.tsx, RegionFeature.tsx, Visit.tsx
+│   ├── Modal.tsx               — client; shared modal shell (Esc / overlay-click close)
+│   ├── ApplyButton.tsx / ApplyForm.tsx                 — client; "apply for a space" modal (no backend; placeholder submit)
+│   └── PerformerInquiryButton.tsx / PerformerForm.tsx  — client; performer inquiry modal (no backend)
+├── lib/
+│   ├── site.ts                 — TICKETS_URL + site-wide constants
+│   └── vendors.ts              — parked static vendor data (unused; for the future vendor rebuild)
 public/
-└── acorn.png                             — extracted from the original inline base64 logo
-supabase/
-└── schema.sql                            — full DB schema (run in Supabase SQL editor to bootstrap)
+└── acorn.png                   — extracted from the original inline base64 logo
 ```
 
 ## Design language (locked in)
@@ -95,13 +67,12 @@ supabase/
 ## Conventions
 - New top-level pages live under `src/app/<route>/page.tsx`. Reuse `<Nav />` and `<Footer />`.
 - Section-level content stays in `src/components/`. Keep data arrays at the top of each component until they're needed in two places.
-- Remote photos load from `rcmediaservices.net` (whitelisted in `next.config.mjs`). Inline `<img>` is fine for now — `next/image` is only used for the local acorn. Vendor/product images now come from Supabase Storage public URLs.
-- Anchor links (`/#about`) work across pages because the homepage owns those ids.
+- Remote photos load from `rcmediaservices.net` (whitelisted in `next.config.mjs`). Inline `<img>` is fine — `next/image` is only used for the local acorn. NOTE: these rcmediaservices photos are heavy HDR/tone-mapped placeholders with baked-in grain — swap for real venue photos when available.
+- Anchor links (`/#about`) work across pages because the homepage owns those ids; keep the homepage section order matched to the nav order.
 - External applications/inquiries should open in a new tab (`target="_blank" rel="noopener noreferrer"`).
 - Mobile-first for event sections.
-- Dashboard sidebar uses `<div className="dash-nav">` — NOT `<nav>` — because the global CSS applies `position:fixed` to all `nav` elements, which would break the sidebar layout.
-- Image URL fields use `||` not `??` for fallbacks — empty string `""` saved from a cleared field should still fall through to the default image.
-- Supabase Storage paths are `{userId}/{timestamp}-{random}.{ext}` so RLS delete policy can match on `(storage.foldername(name))[1] = auth.uid()::text`.
+- The single ticketing link lives in `src/lib/site.ts` (`TICKETS_URL`), consumed by Nav, Footer, Hero, Events, and the Stage page.
+- Image URL fields use `||` not `??` for fallbacks — empty string `""` should still fall through to the default image.
 
 ## Active goals (from owner meeting)
 1. Clarify that Makers Mill is **multiple experiences**, not one venue — surface this on the homepage.
@@ -123,8 +94,10 @@ Treat as standalone brands, not vendors: **Print Ghost**, **Pilates**, **Soul Ho
 
 ## Ticketing
 Current: $10 ticket → ~$14.50 checkout after tax/fees. Exploring custom link via Stripe with a $1 minimum fee model. Legal/logistics still open.
+The backend-driven `getTicketingUrl()` was removed in the 2026-06-19 rebuild — the link is now the static `TICKETS_URL` constant in `src/lib/site.ts` (`'#'` until the real Stripe link exists).
 
 ## Companion docs
 - `roadmap.md` — phased plan
 - `tasks.md` — grouped backlog
 - `todo.md` — active short-list
+- `concerns.md` — archived backend concerns (parked until the backend is rebuilt)

@@ -28,12 +28,12 @@ export default function HomePage() {
     <>
       <Nav />
       <Hero />
-      <ExploreMill />
+      <About />
       <Events />
+      <ExploreMill />
       <Experiences />
       <Businesses />
       <Gallery />
-      <About />
       <RegionFeature />
       <Visit />
       <Footer />

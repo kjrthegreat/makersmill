@@ -1,8 +1,6 @@
 import Image from 'next/image';
 import { ApplyButton } from './ApplyButton';
-
-// TODO: replace '#' with the real ticketing URL when available
-const TICKETS_HREF = '#';
+import { TICKETS_URL } from '@/lib/site';
 
 export function Hero() {
   return (
@@ -41,7 +39,7 @@ export function Hero() {
           Somerset&apos;s multi-experience gathering place — all under one roof.
         </p>
         <div className="hero-ctas rev" style={{ transitionDelay: '.4s' }}>
-          <a href={TICKETS_HREF} className="btn btn-fill">
+          <a href={TICKETS_URL} className="btn btn-fill">
             Get Event Tickets
           </a>
         </div>

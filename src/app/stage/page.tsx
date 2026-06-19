@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
 import { PerformerInquiryButton } from '@/components/PerformerInquiryButton';
+import { TICKETS_URL } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'The Stage — Live Music in Somerset, KY',
@@ -16,9 +17,6 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image' }
 };
 
-// TODO: replace '#' with the real ticketing URL when available
-const TICKETS_HREF = '#';
-const ALL_SHOWS_HREF = '#';
 
 type Show = {
   month: string;
@@ -36,7 +34,7 @@ type Show = {
   delay?: string;
 };
 
-const SHOWS: Show[] = [
+function getShows(ticketsHref: string): Show[] { return [
   {
     month: 'Every',
     day: 'Sat',
@@ -49,7 +47,7 @@ const SHOWS: Show[] = [
     time: '7:00 PM',
     tag: 'All Ages',
     // TODO: real ticket URL
-    cta: { label: 'Tickets', href: '#' }
+    cta: { label: 'Tickets', href: ticketsHref }
   },
   {
     month: 'Jun',
@@ -63,7 +61,7 @@ const SHOWS: Show[] = [
     time: '8:00 PM',
     tag: 'Ticketed',
     // TODO: real ticket URL
-    cta: { label: 'Tickets', href: '#' },
+    cta: { label: 'Tickets', href: ticketsHref },
     delay: '.08s'
   },
   {
@@ -94,10 +92,10 @@ const SHOWS: Show[] = [
     time: '7:30 PM',
     tag: 'Ticketed',
     // TODO: real ticket URL
-    cta: { label: 'Tickets', href: '#' },
+    cta: { label: 'Tickets', href: ticketsHref },
     delay: '.12s'
   }
-];
+]; }
 
 const VENUE_LOCATION = {
   '@type': 'Place',
@@ -175,6 +173,7 @@ const eventJsonLd = [
 ];
 
 export default function StagePage() {
+  const SHOWS = getShows(TICKETS_URL);
   return (
     <>
       <script
@@ -210,7 +209,7 @@ export default function StagePage() {
             touring acts, ticketed shows to free Saturday sets.
           </p>
           <div className="page-hero-ctas rev" style={{ transitionDelay: '.36s' }}>
-            <a href={TICKETS_HREF} className="btn btn-fill">
+            <a href={TICKETS_URL} className="btn btn-fill">
               Get Show Tickets
             </a>
             <PerformerInquiryButton className="btn btn-outline">
@@ -280,10 +279,10 @@ export default function StagePage() {
               </h2>
             </div>
             <div className="events-actions rev">
-              <a href={TICKETS_HREF} className="btn btn-fill">
+              <a href={TICKETS_URL} className="btn btn-fill">
                 Get Tickets
               </a>
-              <a href={ALL_SHOWS_HREF} className="btn btn-outline">
+              <a href={"/#events"} className="btn btn-outline">
                 View All Shows
               </a>
             </div>
@@ -368,10 +367,10 @@ export default function StagePage() {
             Grab a ticket to an upcoming show, or check the calendar and pick a Saturday.
           </p>
           <div className="cta-band-ctas rev" style={{ transitionDelay: '.24s' }}>
-            <a href={TICKETS_HREF} className="btn btn-fill">
+            <a href={TICKETS_URL} className="btn btn-fill">
               Get Show Tickets
             </a>
-            <a href={ALL_SHOWS_HREF} className="btn btn-outline">
+            <a href={"/#events"} className="btn btn-outline">
               View All Shows
             </a>
           </div>

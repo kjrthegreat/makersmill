@@ -1,142 +1,130 @@
 # Makers Mill — Roadmap
 
-Direction set in the owner meeting (notes: `Untitled document.docx`). Phases are ordered by dependency, not fixed dates.
+Direction set in the owner meeting. Phases are ordered by dependency, not fixed dates.
 
-## Phase 1 — Restructure the homepage
-- Open up the layout so it's obvious more pages exist.
-- Promote the ticket CTA to the most visible element on the page.
-- Communicate the multi-experience nature of Makers Mill above the fold.
-- Keep "8 Reasons to Come Back" — expand if it earns the space. ✅ Converted to interactive accordion with expanded copy.
-- Audit mobile event sections; they were specifically called out.
+> **⚠ 2026-06-19 — Frontend-only rebuild.** The Supabase backend was stripped out to restart that work cleanly. **Phases 5 (ticketing infra), 7 (vendor platform), and 8 (Stripe Connect checkout) are shelved** — their code was removed (still in git history: `1c4e978`, `85d09c4`). The public marketing site (Phases 1–4, 6) stands. New since the strip: Events is now a **static calendar**, `/vendors` is an **"under construction"** page, homepage sections reordered to match the nav, and the Explore cards' hover/seam glitches were fixed. The vendor platform will be rebuilt fresh when that work resumes.
 
-## Phase 2 — Build the three sub-pages + business pages
-Pages live in the same site, reachable from main nav:
-1. **The Stage** — strong photography of stage/venue/live music; ticketing front-and-center. ✅ Done.
-2. **Bar / Food & Drink** ✅ Done.
-3. **Vendors** (formerly The Store) ✅ Done.
+## Phase 1 — Restructure the homepage ✅
+- Multi-experience nature communicated above the fold.
+- Ticket CTA promoted.
+- "8 Reasons to Come Back" converted to interactive accordion.
+- Mobile event section audit done.
 
-Individual pages for each business inside the Mill — routes under `/businesses/`:
-- `/businesses/print-ghost` — Print Ghost print studio ✅ Done.
-- `/businesses/pilates` — Pilates studio ✅ Done.
-- `/businesses/soul-house` — Soul House ✅ Done.
+## Phase 2 — Sub-pages + business pages ✅
+- `/stage`, `/bar-food`, `/vendors` — built.
+- `/businesses/print-ghost`, `/businesses/pilates`, `/businesses/soul-house` — scaffolded.
+- Real copy + photos pending from business owners.
 
-Each business page follows the same sub-page template (hero, overview, features, CTA, "Also at the Mill"). Copy is placeholder until the business owners provide real info — use general but evocative brand-consistent language for now.
+## Phase 3 — Applications & inquiry flows ✅
+- `ApplyButton` modal built.
+- Performer inquiry button built.
+- External form URLs pending from Todd (rental space, business space, vendor inquiry).
 
-Arcade and Pool get buttons (possibly linking to schedule/calendar) but stay on the homepage. Trivia does not need its own button.
+## Phase 4 — Search & online presence 🔄
+- [x] JSON-LD schema (LocalBusiness + Events) in layout.tsx
+- [x] robots.ts + sitemap.ts built
+- [ ] Submit sitemap to Google Search Console
+- [ ] Claim / update Google Business Profile
 
-## Phase 3 — Applications & inquiry flows + button functionality
-- Add buttons that open external forms for rental space, business space, and vendor inquiries. ✅ Modal system built (ApplyButton, PerformerInquiryButton).
-- Surface "businesses within Makers Mill" (Print Ghost, Pilates, Soul House) as their own brands with links — individual pages scaffolded (see Phase 2). ✅ Done.
-- **Make all placeholder buttons functional** — currently `href="#"` throughout:
-  - Ticket buttons in Hero, Stage page, Events cards → real ticketing URL (pending Phase 5 decision)
-  - "Get Event Tickets" CTA in Hero → same ticketing URL
-  - Green River Valley Farm "Order Produce" button → GRVF ordering URL
-  - Individual event CTAs (Tickets, Event Details) → per-show URLs
-  - Business card "Learn More" links on homepage → each business's subpage (Phase 2 pages)
-- **Expand Businesses section on homepage** — Businesses.tsx cards should have richer descriptions, a visual identity mark (like a logo initial or color), and link to each business's own page once those are live.
-- Each business page should eventually be owner-managed: they supply real photos, hours, and contact info to replace the placeholder copy.
-
-## Phase 4 — Search & online presence
-- Clean up / take down outdated pages across the web.
-- Improve Google Business profile — target #1 result for relevant searches (currently ~5th).
-- Basic SEO pass on the new pages (titles, descriptions, schema for events + local business).
-
-## Phase 5 — Ticketing
-- Decide build vs. buy on ticketing.
-- Prototype Stripe-based ticket link with a $1 minimum fee model.
-- Resolve legal/logistical questions on revenue cuts before going live.
+## Phase 5 — Ticketing ✅ (infrastructure)
+- [x] Stripe Payment Link approach decided
+- [x] `getTicketingUrl()` reads from site_settings, wired into Nav, Hero, Events, Stage page
+- [x] Admin can update the ticketing URL in Site Settings without a code deploy
+- [ ] Todd to paste real Stripe Payment Link in Site Settings
 
 ## Phase 6 — Partner site work
-- **Green River Valley Farm** — feature on the Makers Mill site, link out to their order/pickup flow.
-- **I Love You a Brunch** — scope a separate build with menu display + online ordering.
+- [x] Green River Valley Farm feature block on homepage
+- [ ] Real ordering URL from GRVF
+- [ ] Scope I Love You a Brunch (menu + online ordering)
 
-## Phase 7 — Vendor platform ✅ Core complete (2026-05-22)
-The `/vendors` page now pulls live data from Supabase and each vendor has a fully dynamic public page.
+## Phase 7 — Vendor platform ✅ Core complete (2026-05-28)
 
-### Auth & portal — done
-- `/vendor/login`, `/vendor/signup`, `/vendor/reset-password` — email+password auth via Supabase
-- Middleware protecting `/vendor/dashboard/*` and `/admin/*`
-- Vendor dashboard: profile editor, product manager, settings, preview link
-- Admin portal: applications queue, vendor management, product moderation, site settings
+### Auth & portal ✅
+- Single login page for vendors + admins; role-aware redirect after auth
+- Vendor dashboard: 8-section profile editor, product manager, reservations, settings
+- Admin portal: applications, vendors, products, events, reservations, accounts, site settings
 
-### Vendor page customization — done (2026-05-22)
-New DB columns added to `vendors` table: `facebook`, `location_in_mill`, `hero_headline`, `hero_subline`, `about_headline`, `accent_color`, `cta_text`, `cta_url`, `gallery_urls` (text[]), `categories` (text[]), `meta_description`.
+### Vendor page customization ✅ (2026-05-28)
+Full page design system. Vendors control:
+- **Theme** — Dark (default) or Light/Bright — full CSS override system
+- **Hero Style** — Full (tall photo), Banner (shorter), Minimal (solid accent color, no photo)
+- **Hero Overlay** — Dark / Medium / Light / Color tint
+- **Shop Layout** — 3 columns or 2 columns; Grid cards or List rows
+- **About Photo** — Right or Left (photo side flip)
+- **Promo Banner** — custom text strip shown below hero in accent color
+- **Custom shop headline, show/hide gallery, show/hide hours**
 
-Profile form expanded to 7 sections: Store Info, Categories (12 types), Contact & Links (incl. Facebook), Images (logo + banner + 6-slot gallery), Page Customization (hero headline, accent color picker, custom CTA), SEO (meta description), Hours.
+All controlled via pill-toggle buttons in the Profile editor — no radio inputs, no alignment issues.
 
-### File upload — done (2026-05-22)
-- Supabase Storage buckets created: `vendor-assets` and `product-images` (both public, 5 MB limit, images only)
-- `ImageUpload` component: drag-and-drop or click-to-upload, uploads to Storage, returns permanent public URL, URL paste fallback
-- Used in ProfileForm (logo, banner, 6 gallery slots), AdminVendorForm, and ProductForm (up to 5 product photos)
+DB columns added (two SQL migrations):
+```
+page_theme, hero_overlay, shop_columns, shop_headline,
+promo_text, promo_active, show_gallery, show_hours,
+hero_style, about_photo_side, card_style
+```
 
-### Admin full vendor edit — done (2026-05-22)
-- `/admin/vendors/[id]` — admin can edit every field of any vendor's profile (status, slug, sort order, featured toggle, all content + images + hours) plus see and moderate their products inline
+### Vendor directory cards ✅ (2026-05-28)
+Full redesign to professional marketplace standard:
+- 210px full-width cover image with gradient overlay
+- Logo badge floating in cover footer, 52×52
+- Category tags on the overlay
+- Featured gold frosted-glass badge (top-right)
+- Gradient fallback (accent color → dark) for vendors without a banner
+- 2-line description clamp, cubic-bezier hover lift, image zoom
 
-### Public vendor page — done (2026-05-22)
-- Renders all new customization fields: accent color, custom hero, categories, gallery, Facebook, CTA, location, SEO meta
-- **Section order: Hero → Shop → About → Gallery → slim footer nav** (shop first per Todd)
-- Removed boilerplate "Come Find" and "More to Discover" sections that were identical on every page
+### Commerce system ✅
+- **Tier 1 (link-out):** `buy_url` per product → vendor's Squarespace/Etsy/Square
+- **Tier 2 (Reserve for Pickup):** modal rendered via React portal (avoids CSS transform bug), stored in DB, vendor + admin dashboards with full status flow
 
-### Vendor directory — done (2026-05-22)
-- Shows up to 2 category tags on each vendor card from DB
-- Categories fetched from `vendors.categories` array column
+### ImageUpload ✅
+- `hint` prop: each upload slot explains exactly where the image appears + recommended dimensions
+- Logo, Banner Photo, Gallery Photos each have specific guidance
 
-### Later
-- Enable product checkout via Stripe (Phase 5 dependency).
-- Per-vendor storefronts once payment infrastructure settled.
-- Drag-and-drop vendor reorder in admin directory controls.
-- "View as vendor" impersonation for admin support.
+### Remaining before soft launch
+- [ ] Run layout columns SQL migration (hero_style, about_photo_side, card_style)
+- [ ] Wire Todd's real Stripe Payment Link into Site Settings
+- [ ] Set up Resend for vendor email notifications
+- [ ] Announcement banner display on public pages
+- [ ] Walk Todd through vendor portal
+- [ ] Get first vendors signed up + activated
 
 ## Phase 8 — Online vendor checkout (Stripe Connect)
-Vendors sell products directly through the site. Makers Mill takes a platform fee on each transaction automatically — no manual payouts.
-
-**Why Stripe Connect (not a single Stripe account):** Each vendor connects their own Stripe account. Money goes directly to them; Makers Mill's platform fee is split at the moment of payment. This avoids the mill holding vendor funds, eliminates complex manual payout tracking, and keeps vendor tax reporting their own responsibility.
+Vendors connect their own Stripe account. Money goes directly to them; Makers Mill's platform fee is split at payment time.
 
 ### What needs to be built
+**Vendor onboarding:**
+- `stripe_account_id` column on vendors table
+- "Connect Stripe" button → Stripe Connect OAuth → save account ID
+- Dashboard shows connection status; products can't go to checkout until connected
 
-**Vendor onboarding (Stripe side)**
-- Add `stripe_account_id` column to `vendors` table
-- "Connect Stripe" button in vendor dashboard → Stripe Connect OAuth flow → save `stripe_account_id` on return
-- Show connection status in dashboard (connected / not connected); products can't go to checkout until connected
+**Cart + checkout:**
+- "Add to Cart" on product cards (for Stripe-connected vendors)
+- Cart in localStorage or lightweight server session
+- Next.js API route: creates Stripe Payment Intent with `transfer_data` + `application_fee_amount`
+- Stripe-hosted checkout or embedded Stripe Elements
 
-**Cart + checkout**
-- "Add to Cart" button on product cards (replaces "Inquire →" for vendors with Stripe connected)
-- Cart stored in localStorage or a lightweight server session
-- Checkout via a Next.js API route that creates a Stripe Payment Intent with `transfer_data` pointing to the vendor's connected account and `application_fee_amount` set to Makers Mill's cut
-- Stripe-hosted checkout page or embedded Stripe Elements form
-- Confirmation page + email receipt (Stripe handles receipt by default)
+**Order management:**
+- `orders` table (id, vendor_id, customer_email, stripe_payment_intent_id, total_cents, fee_cents, status)
+- `order_items` table (order_id, product_id, quantity, price_cents)
+- Stripe webhook listener at `/api/webhooks/stripe`
+- Orders view in vendor dashboard + admin portal
 
-**Order management**
-- New `orders` table: id, vendor_id, customer_email, stripe_payment_intent_id, total_cents, fee_cents, status, created_at
-- New `order_items` table: order_id, product_id, quantity, price_cents
-- Stripe webhook listener (`/api/webhooks/stripe`): handle `payment_intent.succeeded`, `payment_intent.payment_failed`, `charge.refunded`, `charge.dispute.created`
-- Orders view in vendor dashboard: list of orders, status, customer contact
-- Orders view in admin portal: all orders across all vendors, revenue totals
+**Platform fee:**
+- Configurable in admin site settings (10% discussed)
+- Set at checkout creation time — no manual intervention
 
-**Platform fee**
-- Fee percentage configurable in admin site settings (start at 10% per the advertising model discussion)
-- Fee is set at checkout creation time — no manual intervention needed
-
-### Dependencies / blockers before building
-- Stripe account for Makers Mill (needs Todd to create/connect)
-- Decision on platform fee percentage (10% discussed)
-- Refund and dispute policy — who eats chargebacks? Document before launch
-- Legal clarity: vendors selling through the platform have tax implications; consult before opening to all vendors
-- Terms of service for vendors must be in place
+### Blockers
+- Stripe account for Makers Mill (Todd to create)
+- Decision on fee % (10% discussed)
+- Refund / dispute policy — document before launch
+- Vendor terms of service (legal to draft)
+- Tax implications for vendors — consult before opening to all
 
 ### Current stopgap
-Vendors with their own Shopify/Etsy/Square can use the `cta_url` field in their profile to link to their external store. This is already live — no build needed.
+Vendors with Shopify/Etsy/Square use `buy_url` per product to link out. Already live.
 
 ### Rough scope
-3–4 weeks of focused build. The existing `products` table (prices in cents, vendor_id FK) is already structured correctly for Stripe — no schema changes needed beyond adding `stripe_account_id` to vendors and creating the orders tables.
+3–4 weeks focused build. The `products` table (prices in cents, vendor_id FK) is already correctly structured — no schema changes beyond `stripe_account_id` on vendors and creating orders tables.
 
 ## Advertising model (parallel track)
-Pitch participating vendors/businesses on 10% of sales generated through placements on the Makers Mill site. Needs a tracking mechanism before it can be sold. Phase 8's platform fee mechanism handles the collection side once checkout is live.
-
----
-
-## Done (this session)
-- Section divider bars: symmetric orange glow on both sides of every section break.
-- "Eight Reasons to Come Back" converted from card grid to interactive accordion — multiple items can be open simultaneously, copy expanded with made-up detail for all 8 entries.
-- Back to Makers Mill button: redesigned as a solid orange button, repositioned to top-left of each sub-page hero (out of the centered hero content). Applied consistently across Stage, Bar & Food, Vendors, Print Ghost, Pilates, and Soul House pages.
-- Fixed reveal animation bug on accordion — React re-renders were wiping the IntersectionObserver's `on` class, causing rows to go invisible on click.
+10% of sales generated via placements. Phase 8's fee mechanism handles collection. Tracking mechanism and vendor one-pager still needed.

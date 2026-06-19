@@ -75,7 +75,7 @@ export function Experiences() {
                   <span className="exp-acc-n">{e.n}</span>
                   <span className="exp-acc-icon">{e.icon}</span>
                   <span className="exp-acc-title">{e.title}</span>
-                  <span className="exp-acc-chevron">{isOpen ? '−' : '+'}</span>
+                  <span className="exp-acc-chevron" aria-hidden="true">+</span>
                 </button>
                 <div className="exp-acc-body">
                   <p className="exp-acc-desc">{e.desc}</p>

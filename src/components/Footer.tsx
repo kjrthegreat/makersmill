@@ -1,8 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-
-// TODO: replace '#' with the real ticketing URL when available
-const TICKETS_HREF = '#';
+import { TICKETS_URL } from '@/lib/site';
 
 const LINKS = [
   { href: '/#about', label: 'About' },
@@ -41,7 +39,7 @@ export function Footer() {
               </li>
             ))}
             <li>
-              <Link href={TICKETS_HREF} className="footer-tickets">
+              <Link href={TICKETS_URL} className="footer-tickets">
                 Tickets
               </Link>
             </li>
